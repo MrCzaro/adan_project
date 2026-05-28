@@ -1,0 +1,4878 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<model name="Vessel_BG_Units" xmlns="http://www.cellml.org/cellml/1.1#" xmlns:cellml="http://www.cellml.org/cellml/1.1#">
+    <!--//////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////// non-BC Vessel ////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////-->
+    <component name="pv_type">
+        <variable name="t" public_interface="in" units="second"/>
+        <!-- Constitutive Parameters-->
+        <variable initial_value="0.004" name="mu" units="Js_per_m3"/>
+        <variable initial_value="1050" name="rho" units="Js2_per_m5"/>
+        <variable name="g" public_interface="in" units="m_per_s2"/>
+        <variable name="E" public_interface="in" units="J_per_m3"/>
+        <variable name="theta" public_interface="in" units="dimensionless"/>
+        <variable name="l" public_interface="in" units="metre"/>
+        <variable name="h" public_interface="out" units="metre"/>
+        <variable name="r_d" public_interface="in" units="metre"/>
+        <variable name="r_p" public_interface="in" units="metre"/>
+        <variable name="r" public_interface="out" units="metre"/>
+        <variable name="I" public_interface="out" units="Js2_per_m6"/>
+        <variable name="C" public_interface="out" units="m6_per_J"/>
+        <variable name="R" public_interface="out" units="Js_per_m6"/>
+        <variable name="R_v" public_interface="out" units="Js_per_m6"/>
+        <variable initial_value="0.2802" name="a" units="dimensionless"/>
+        <variable initial_value="-505.3" name="b" units="per_m"/>
+        <variable initial_value="0.1324" name="c" units="dimensionless"/>
+        <variable initial_value="-11.14" name="d" units="per_m"/>
+        <!-- State Variables-->
+        <variable name="u_in" public_interface="in" units="J_per_m3"/>
+        <variable initial_value="0.0" name="v" public_interface="out" units="m3_per_s"/>
+        <variable name="q_0" public_interface="out" units="m3"/>
+        <variable name="u" public_interface="out" units="J_per_m3"/>
+        <variable initial_value="0.0" name="u_C" public_interface="out" units="J_per_m3"/>
+        <variable name="v_out" public_interface="in" units="m3_per_s"/>
+        <!-- Constitutive Relations-->
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <ci>q_0</ci>
+                <apply>
+                    <times/>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <pi/>
+                            <ci>l</ci>
+                        </apply>
+                        <cn cellml:units="dimensionless">3</cn>
+                    </apply>
+                    <apply>
+                        <plus/>
+                        <apply>
+                            <times/>
+                            <ci>r_p</ci>
+                            <ci>r_p</ci>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <ci>r_d</ci>
+                            <ci>r_p</ci>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <ci>r_d</ci>
+                            <ci>r_d</ci>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>r</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <plus/>
+                        <ci>r_p</ci>
+                        <ci>r_d</ci>
+                    </apply>
+                    <cn cellml:units="dimensionless">2</cn>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>h</ci>
+                <apply>
+                    <times/>
+                    <ci>r</ci>
+                    <apply>
+                        <plus/>
+                        <apply>
+                            <times/>
+                            <ci>a</ci>
+                            <apply>
+                                <exp/>
+                                <apply>
+                                    <times/>
+                                    <ci>b</ci>
+                                    <ci>r</ci>
+                                </apply>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <ci>c</ci>
+                            <apply>
+                                <exp/>
+                                <apply>
+                                    <times/>
+                                    <ci>d</ci>
+                                    <ci>r</ci>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>I</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <times/>
+                        <ci>rho</ci>
+                        <ci>l</ci>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <pi/>
+                        <apply>
+                            <power/>
+                            <ci>r</ci>
+                            <cn cellml:units="dimensionless">2</cn>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>C</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <times/>
+                        <cn cellml:units="dimensionless">2</cn>
+                        <pi/>
+                        <apply>
+                            <power/>
+                            <ci>r</ci>
+                            <cn cellml:units="dimensionless">3</cn>
+                        </apply>
+                        <ci>l</ci>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <ci>E</ci>
+                        <ci>h</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>R</ci>
+                <apply>
+                    <times/>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <cn cellml:units="dimensionless">8</cn>
+                            <ci>mu</ci>
+                            <ci>l</ci>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <cn cellml:units="dimensionless">3</cn>
+                            <pi/>
+                        </apply>
+                    </apply>
+                    <apply>
+                        <plus/>
+                        <apply>
+                            <divide/>
+                            <cn cellml:units="dimensionless">1</cn>
+                            <apply>
+                                <times/>
+                                <apply>
+                                    <power/>
+                                    <ci>r_p</ci>
+                                    <cn cellml:units="dimensionless">3</cn>
+                                </apply>
+                                <ci>r_d</ci>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <divide/>
+                            <cn cellml:units="dimensionless">1</cn>
+                            <apply>
+                                <times/>
+                                <apply>
+                                    <power/>
+                                    <ci>r_p</ci>
+                                    <cn cellml:units="dimensionless">2</cn>
+                                </apply>
+                                <apply>
+                                    <power/>
+                                    <ci>r_d</ci>
+                                    <cn cellml:units="dimensionless">2</cn>
+                                </apply>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <divide/>
+                            <cn cellml:units="dimensionless">1</cn>
+                            <apply>
+                                <times/>
+                                <ci>r_p</ci>
+                                <apply>
+                                    <power/>
+                                    <ci>r_d</ci>
+                                    <cn cellml:units="dimensionless">3</cn>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>R_v</ci>
+                <apply>
+                    <divide/>
+                    <cn cellml:units="second">0.01</cn>
+                    <ci>C</ci>
+                </apply>
+            </apply>
+            <!-- Conservation Laws-->
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>v</ci>
+                </apply>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <minus/>
+                        <apply>
+                            <minus/>
+                            <apply>
+                                <minus/>
+                                <ci>u_in</ci>
+                                <ci>u</ci>
+                            </apply>
+                            <apply>
+                                <times/>
+                                <ci>R</ci>
+                                <ci>v</ci>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <ci>rho</ci>
+                            <ci>g</ci>
+                            <ci>l</ci>
+                            <apply>
+                                <cos/>
+                                <apply>
+                                    <divide/>
+                                    <apply>
+                                        <times/>
+                                        <ci>theta</ci>
+                                        <pi/>
+                                    </apply>
+                                    <cn cellml:units="dimensionless">180</cn>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </apply>
+                    <ci>I</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>u_C</ci>
+                </apply>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <minus/>
+                        <ci>v</ci>
+                        <ci>v_out</ci>
+                    </apply>
+                    <ci>C</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>u</ci>
+                <apply>
+                    <plus/>
+                    <ci>u_C</ci>
+                    <apply>
+                        <times/>
+                        <ci>R_v</ci>
+                        <apply>
+                            <minus/>
+                            <ci>v</ci>
+                            <ci>v_out</ci>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+        </math>
+    </component>
+    <!--&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-//
+&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-//-->
+    <component name="vp_type">
+        <variable name="t" public_interface="in" units="second"/>
+        <!-- Constitutive Parameters-->
+        <variable initial_value="0.004" name="mu" units="Js_per_m3"/>
+        <variable initial_value="1050" name="rho" units="Js2_per_m5"/>
+        <variable name="g" public_interface="in" units="m_per_s2"/>
+        <variable name="E" public_interface="in" units="J_per_m3"/>
+        <variable name="theta" public_interface="in" units="dimensionless"/>
+        <variable name="l" public_interface="in" units="metre"/>
+        <variable name="h" public_interface="out" units="metre"/>
+        <variable name="r_d" public_interface="in" units="metre"/>
+        <variable name="r_p" public_interface="in" units="metre"/>
+        <variable name="r" public_interface="out" units="metre"/>
+        <variable name="I" public_interface="out" units="Js2_per_m6"/>
+        <variable name="C" public_interface="out" units="m6_per_J"/>
+        <variable name="R" public_interface="out" units="Js_per_m6"/>
+        <variable name="R_v" public_interface="out" units="Js_per_m6"/>
+        <variable initial_value="0.2802" name="a" units="dimensionless"/>
+        <variable initial_value="-505.3" name="b" units="per_m"/>
+        <variable initial_value="0.1324" name="c" units="dimensionless"/>
+        <variable initial_value="-11.14" name="d" units="per_m"/>
+        <!-- State Variables-->
+        <variable name="v_in" public_interface="in" units="m3_per_s"/>
+        <variable name="u" public_interface="out" units="J_per_m3"/>
+        <variable initial_value="0.0" name="u_C" public_interface="out" units="J_per_m3"/>
+        <variable name="q_0" public_interface="out" units="m3"/>
+        <variable initial_value="0.0" name="v" public_interface="out" units="m3_per_s"/>
+        <variable name="u_out" public_interface="in" units="J_per_m3"/>
+        <!-- Constitutive Relations-->
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <ci>q_0</ci>
+                <apply>
+                    <times/>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <pi/>
+                            <ci>l</ci>
+                        </apply>
+                        <cn cellml:units="dimensionless">3</cn>
+                    </apply>
+                    <apply>
+                        <plus/>
+                        <apply>
+                            <times/>
+                            <ci>r_p</ci>
+                            <ci>r_p</ci>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <ci>r_d</ci>
+                            <ci>r_p</ci>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <ci>r_d</ci>
+                            <ci>r_d</ci>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>h</ci>
+                <apply>
+                    <times/>
+                    <ci>r</ci>
+                    <apply>
+                        <plus/>
+                        <apply>
+                            <times/>
+                            <ci>a</ci>
+                            <apply>
+                                <exp/>
+                                <apply>
+                                    <times/>
+                                    <ci>b</ci>
+                                    <ci>r</ci>
+                                </apply>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <ci>c</ci>
+                            <apply>
+                                <exp/>
+                                <apply>
+                                    <times/>
+                                    <ci>d</ci>
+                                    <ci>r</ci>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>I</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <times/>
+                        <ci>rho</ci>
+                        <ci>l</ci>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <pi/>
+                        <apply>
+                            <power/>
+                            <ci>r</ci>
+                            <cn cellml:units="dimensionless">2</cn>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>r</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <plus/>
+                        <ci>r_p</ci>
+                        <ci>r_d</ci>
+                    </apply>
+                    <cn cellml:units="dimensionless">2</cn>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>C</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <times/>
+                        <cn cellml:units="dimensionless">2</cn>
+                        <pi/>
+                        <apply>
+                            <power/>
+                            <ci>r</ci>
+                            <cn cellml:units="dimensionless">3</cn>
+                        </apply>
+                        <ci>l</ci>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <ci>E</ci>
+                        <ci>h</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>R</ci>
+                <apply>
+                    <times/>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <cn cellml:units="dimensionless">8</cn>
+                            <ci>mu</ci>
+                            <ci>l</ci>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <cn cellml:units="dimensionless">3</cn>
+                            <pi/>
+                        </apply>
+                    </apply>
+                    <apply>
+                        <plus/>
+                        <apply>
+                            <divide/>
+                            <cn cellml:units="dimensionless">1</cn>
+                            <apply>
+                                <times/>
+                                <apply>
+                                    <power/>
+                                    <ci>r_p</ci>
+                                    <cn cellml:units="dimensionless">3</cn>
+                                </apply>
+                                <ci>r_d</ci>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <divide/>
+                            <cn cellml:units="dimensionless">1</cn>
+                            <apply>
+                                <times/>
+                                <apply>
+                                    <power/>
+                                    <ci>r_p</ci>
+                                    <cn cellml:units="dimensionless">2</cn>
+                                </apply>
+                                <apply>
+                                    <power/>
+                                    <ci>r_d</ci>
+                                    <cn cellml:units="dimensionless">2</cn>
+                                </apply>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <divide/>
+                            <cn cellml:units="dimensionless">1</cn>
+                            <apply>
+                                <times/>
+                                <ci>r_p</ci>
+                                <apply>
+                                    <power/>
+                                    <ci>r_d</ci>
+                                    <cn cellml:units="dimensionless">3</cn>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>R_v</ci>
+                <apply>
+                    <divide/>
+                    <cn cellml:units="second">0.01</cn>
+                    <ci>C</ci>
+                </apply>
+            </apply>
+            <!-- Conservation Laws-->
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>v</ci>
+                </apply>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <minus/>
+                        <apply>
+                            <minus/>
+                            <apply>
+                                <minus/>
+                                <ci>u</ci>
+                                <ci>u_out</ci>
+                            </apply>
+                            <apply>
+                                <times/>
+                                <ci>R</ci>
+                                <ci>v</ci>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <ci>rho</ci>
+                            <ci>g</ci>
+                            <ci>l</ci>
+                            <apply>
+                                <cos/>
+                                <apply>
+                                    <divide/>
+                                    <apply>
+                                        <times/>
+                                        <ci>theta</ci>
+                                        <pi/>
+                                    </apply>
+                                    <cn cellml:units="dimensionless">180</cn>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </apply>
+                    <ci>I</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>u_C</ci>
+                </apply>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <minus/>
+                        <ci>v_in</ci>
+                        <ci>v</ci>
+                    </apply>
+                    <ci>C</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>u</ci>
+                <apply>
+                    <plus/>
+                    <ci>u_C</ci>
+                    <apply>
+                        <times/>
+                        <ci>R_v</ci>
+                        <apply>
+                            <minus/>
+                            <ci>v_in</ci>
+                            <ci>v</ci>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+        </math>
+    </component>
+    <!--&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-//
+&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-//-->
+    <component name="pp_type">
+        <variable name="t" public_interface="in" units="second"/>
+        <!-- Constitutive Parameters-->
+        <variable initial_value="0.004" name="mu" units="Js_per_m3"/>
+        <variable initial_value="1050" name="rho" units="Js2_per_m5"/>
+        <variable name="g" public_interface="in" units="m_per_s2"/>
+        <variable name="E" public_interface="in" units="J_per_m3"/>
+        <variable name="theta" public_interface="in" units="dimensionless"/>
+        <variable name="l" public_interface="in" units="metre"/>
+        <variable name="h" public_interface="out" units="metre"/>
+        <variable name="r_d" public_interface="in" units="metre"/>
+        <variable name="r_p" public_interface="in" units="metre"/>
+        <variable name="r" public_interface="out" units="metre"/>
+        <variable name="I" public_interface="out" units="Js2_per_m6"/>
+        <variable name="C" public_interface="out" units="m6_per_J"/>
+        <variable name="R" public_interface="out" units="Js_per_m6"/>
+        <variable name="R_v" public_interface="out" units="Js_per_m6"/>
+        <variable initial_value="0.2802" name="a" units="dimensionless"/>
+        <variable initial_value="-505.3" name="b" units="per_m"/>
+        <variable initial_value="0.1324" name="c" units="dimensionless"/>
+        <variable initial_value="-11.14" name="d" units="per_m"/>
+        <!-- State Variables-->
+        <variable name="u_in" public_interface="in" units="J_per_m3"/>
+        <variable initial_value="0.0" name="v" public_interface="out" units="m3_per_s"/>
+        <variable name="q_0" public_interface="out" units="m3"/>
+        <variable name="u" public_interface="out" units="J_per_m3"/>
+        <variable initial_value="0.0" name="u_C" public_interface="out" units="J_per_m3"/>
+        <variable initial_value="0.0" name="v_d" public_interface="out" units="m3_per_s"/>
+        <variable name="u_out" public_interface="in" units="J_per_m3"/>
+        <!-- Constitutive Relations-->
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <ci>q_0</ci>
+                <apply>
+                    <times/>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <pi/>
+                            <ci>l</ci>
+                        </apply>
+                        <cn cellml:units="dimensionless">3</cn>
+                    </apply>
+                    <apply>
+                        <plus/>
+                        <apply>
+                            <times/>
+                            <ci>r_p</ci>
+                            <ci>r_p</ci>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <ci>r_d</ci>
+                            <ci>r_p</ci>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <ci>r_d</ci>
+                            <ci>r_d</ci>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>r</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <plus/>
+                        <ci>r_p</ci>
+                        <ci>r_d</ci>
+                    </apply>
+                    <cn cellml:units="dimensionless">2</cn>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>h</ci>
+                <apply>
+                    <times/>
+                    <ci>r</ci>
+                    <apply>
+                        <plus/>
+                        <apply>
+                            <times/>
+                            <ci>a</ci>
+                            <apply>
+                                <exp/>
+                                <apply>
+                                    <times/>
+                                    <ci>b</ci>
+                                    <ci>r</ci>
+                                </apply>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <ci>c</ci>
+                            <apply>
+                                <exp/>
+                                <apply>
+                                    <times/>
+                                    <ci>d</ci>
+                                    <ci>r</ci>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>I</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <times/>
+                        <ci>rho</ci>
+                        <ci>l</ci>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <pi/>
+                        <apply>
+                            <power/>
+                            <ci>r</ci>
+                            <cn cellml:units="dimensionless">2</cn>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>C</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <times/>
+                        <cn cellml:units="dimensionless">2</cn>
+                        <pi/>
+                        <apply>
+                            <power/>
+                            <ci>r</ci>
+                            <cn cellml:units="dimensionless">3</cn>
+                        </apply>
+                        <ci>l</ci>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <ci>E</ci>
+                        <ci>h</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>R</ci>
+                <apply>
+                    <times/>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <cn cellml:units="dimensionless">8</cn>
+                            <ci>mu</ci>
+                            <ci>l</ci>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <cn cellml:units="dimensionless">3</cn>
+                            <pi/>
+                        </apply>
+                    </apply>
+                    <apply>
+                        <plus/>
+                        <apply>
+                            <divide/>
+                            <cn cellml:units="dimensionless">1</cn>
+                            <apply>
+                                <times/>
+                                <apply>
+                                    <power/>
+                                    <ci>r_p</ci>
+                                    <cn cellml:units="dimensionless">3</cn>
+                                </apply>
+                                <ci>r_d</ci>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <divide/>
+                            <cn cellml:units="dimensionless">1</cn>
+                            <apply>
+                                <times/>
+                                <apply>
+                                    <power/>
+                                    <ci>r_p</ci>
+                                    <cn cellml:units="dimensionless">2</cn>
+                                </apply>
+                                <apply>
+                                    <power/>
+                                    <ci>r_d</ci>
+                                    <cn cellml:units="dimensionless">2</cn>
+                                </apply>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <divide/>
+                            <cn cellml:units="dimensionless">1</cn>
+                            <apply>
+                                <times/>
+                                <ci>r_p</ci>
+                                <apply>
+                                    <power/>
+                                    <ci>r_d</ci>
+                                    <cn cellml:units="dimensionless">3</cn>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>R_v</ci>
+                <apply>
+                    <divide/>
+                    <cn cellml:units="second">0.01</cn>
+                    <ci>C</ci>
+                </apply>
+            </apply>
+            <!-- Conservation Laws-->
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>v</ci>
+                </apply>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <minus/>
+                        <apply>
+                            <minus/>
+                            <apply>
+                                <minus/>
+                                <ci>u_in</ci>
+                                <ci>u</ci>
+                            </apply>
+                            <apply>
+                                <times/>
+                                <apply>
+                                    <divide/>
+                                    <ci>R</ci>
+                                    <cn cellml:units="dimensionless">2</cn>
+                                </apply>
+                                <ci>v</ci>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <ci>rho</ci>
+                            <ci>g</ci>
+                            <ci>l</ci>
+                            <apply>
+                                <cos/>
+                                <apply>
+                                    <divide/>
+                                    <apply>
+                                        <times/>
+                                        <ci>theta</ci>
+                                        <pi/>
+                                    </apply>
+                                    <cn cellml:units="dimensionless">180</cn>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </apply>
+                    <apply>
+                        <divide/>
+                        <ci>I</ci>
+                        <cn cellml:units="dimensionless">2</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>u_C</ci>
+                </apply>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <minus/>
+                        <ci>v</ci>
+                        <ci>v_d</ci>
+                    </apply>
+                    <ci>C</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>u</ci>
+                <apply>
+                    <plus/>
+                    <ci>u_C</ci>
+                    <apply>
+                        <times/>
+                        <ci>R_v</ci>
+                        <apply>
+                            <minus/>
+                            <ci>v</ci>
+                            <ci>v_d</ci>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>v_d</ci>
+                </apply>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <minus/>
+                        <apply>
+                            <minus/>
+                            <ci>u</ci>
+                            <ci>u_out</ci>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <apply>
+                                <divide/>
+                                <ci>R</ci>
+                                <cn cellml:units="dimensionless">2</cn>
+                            </apply>
+                            <ci>v_d</ci>
+                        </apply>
+                    </apply>
+                    <apply>
+                        <divide/>
+                        <ci>I</ci>
+                        <cn cellml:units="dimensionless">2</cn>
+                    </apply>
+                </apply>
+            </apply>
+        </math>
+    </component>
+    <!--//////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////// input-BC Vessel ///////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////-->
+    <component name="vv_type">
+        <variable name="t" public_interface="in" units="second"/>
+        <!-- Constitutive Parameters-->
+        <variable initial_value="0.004" name="mu" units="Js_per_m3"/>
+        <variable initial_value="1050" name="rho" units="Js2_per_m5"/>
+        <variable name="g" public_interface="in" units="m_per_s2"/>
+        <variable name="E" public_interface="in" units="J_per_m3"/>
+        <variable name="theta" public_interface="in" units="dimensionless"/>
+        <variable name="l" public_interface="in" units="metre"/>
+        <variable name="h" public_interface="out" units="metre"/>
+        <variable name="r_d" public_interface="in" units="metre"/>
+        <variable name="r_p" public_interface="in" units="metre"/>
+        <variable name="r" public_interface="out" units="metre"/>
+        <variable name="I" public_interface="out" units="Js2_per_m6"/>
+        <variable name="C" public_interface="out" units="m6_per_J"/>
+        <variable name="R" public_interface="out" units="Js_per_m6"/>
+        <variable name="R_v" public_interface="out" units="Js_per_m6"/>
+        <variable initial_value="0.2802" name="a" units="dimensionless"/>
+        <variable initial_value="-505.3" name="b" units="per_m"/>
+        <variable initial_value="0.1324" name="c" units="dimensionless"/>
+        <variable initial_value="-11.14" name="d" units="per_m"/>
+        <!-- State Variables-->
+        <variable name="v_in" public_interface="in" units="m3_per_s"/>
+        <variable name="u" public_interface="out" units="J_per_m3"/>
+        <variable initial_value="0.0" name="u_C" public_interface="out" units="J_per_m3"/>
+        <variable initial_value="0.0" name="v" public_interface="out" units="m3_per_s"/>
+        <variable name="q_0" public_interface="out" units="m3"/>
+        <variable name="u_d" public_interface="out" units="J_per_m3"/>
+        <variable initial_value="0.0" name="u_C_d" public_interface="out" units="J_per_m3"/>
+        <variable name="v_out" public_interface="in" units="m3_per_s"/>
+        <!-- Constitutive Relations-->
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <ci>q_0</ci>
+                <apply>
+                    <times/>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <pi/>
+                            <ci>l</ci>
+                        </apply>
+                        <cn cellml:units="dimensionless">3</cn>
+                    </apply>
+                    <apply>
+                        <plus/>
+                        <apply>
+                            <times/>
+                            <ci>r_p</ci>
+                            <ci>r_p</ci>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <ci>r_d</ci>
+                            <ci>r_p</ci>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <ci>r_d</ci>
+                            <ci>r_d</ci>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>r</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <plus/>
+                        <ci>r_p</ci>
+                        <ci>r_d</ci>
+                    </apply>
+                    <cn cellml:units="dimensionless">2</cn>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>h</ci>
+                <apply>
+                    <times/>
+                    <ci>r</ci>
+                    <apply>
+                        <plus/>
+                        <apply>
+                            <times/>
+                            <ci>a</ci>
+                            <apply>
+                                <exp/>
+                                <apply>
+                                    <times/>
+                                    <ci>b</ci>
+                                    <ci>r</ci>
+                                </apply>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <ci>c</ci>
+                            <apply>
+                                <exp/>
+                                <apply>
+                                    <times/>
+                                    <ci>d</ci>
+                                    <ci>r</ci>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>I</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <times/>
+                        <ci>rho</ci>
+                        <ci>l</ci>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <pi/>
+                        <apply>
+                            <power/>
+                            <ci>r</ci>
+                            <cn cellml:units="dimensionless">2</cn>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>C</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <times/>
+                        <cn cellml:units="dimensionless">2</cn>
+                        <pi/>
+                        <apply>
+                            <power/>
+                            <ci>r</ci>
+                            <cn cellml:units="dimensionless">3</cn>
+                        </apply>
+                        <ci>l</ci>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <ci>E</ci>
+                        <ci>h</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>R</ci>
+                <apply>
+                    <times/>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <cn cellml:units="dimensionless">8</cn>
+                            <ci>mu</ci>
+                            <ci>l</ci>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <cn cellml:units="dimensionless">3</cn>
+                            <pi/>
+                        </apply>
+                    </apply>
+                    <apply>
+                        <plus/>
+                        <apply>
+                            <divide/>
+                            <cn cellml:units="dimensionless">1</cn>
+                            <apply>
+                                <times/>
+                                <apply>
+                                    <power/>
+                                    <ci>r_p</ci>
+                                    <cn cellml:units="dimensionless">3</cn>
+                                </apply>
+                                <ci>r_d</ci>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <divide/>
+                            <cn cellml:units="dimensionless">1</cn>
+                            <apply>
+                                <times/>
+                                <apply>
+                                    <power/>
+                                    <ci>r_p</ci>
+                                    <cn cellml:units="dimensionless">2</cn>
+                                </apply>
+                                <apply>
+                                    <power/>
+                                    <ci>r_d</ci>
+                                    <cn cellml:units="dimensionless">2</cn>
+                                </apply>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <divide/>
+                            <cn cellml:units="dimensionless">1</cn>
+                            <apply>
+                                <times/>
+                                <ci>r_p</ci>
+                                <apply>
+                                    <power/>
+                                    <ci>r_d</ci>
+                                    <cn cellml:units="dimensionless">3</cn>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>R_v</ci>
+                <apply>
+                    <divide/>
+                    <cn cellml:units="second">0.01</cn>
+                    <ci>C</ci>
+                </apply>
+            </apply>
+            <!-- Conservation Laws-->
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>v</ci>
+                </apply>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <minus/>
+                        <apply>
+                            <minus/>
+                            <apply>
+                                <minus/>
+                                <ci>u</ci>
+                                <ci>u_d</ci>
+                            </apply>
+                            <apply>
+                                <times/>
+                                <ci>R</ci>
+                                <ci>v</ci>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <ci>rho</ci>
+                            <ci>g</ci>
+                            <ci>l</ci>
+                            <apply>
+                                <cos/>
+                                <apply>
+                                    <divide/>
+                                    <apply>
+                                        <times/>
+                                        <ci>theta</ci>
+                                        <pi/>
+                                    </apply>
+                                    <cn cellml:units="dimensionless">180</cn>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </apply>
+                    <ci>I</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>u_C</ci>
+                </apply>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <minus/>
+                        <ci>v_in</ci>
+                        <ci>v</ci>
+                    </apply>
+                    <apply>
+                        <divide/>
+                        <ci>C</ci>
+                        <cn cellml:units="dimensionless">2</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>u_C_d</ci>
+                </apply>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <minus/>
+                        <ci>v</ci>
+                        <ci>v_out</ci>
+                    </apply>
+                    <apply>
+                        <divide/>
+                        <ci>C</ci>
+                        <cn cellml:units="dimensionless">2</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>u</ci>
+                <apply>
+                    <plus/>
+                    <ci>u_C</ci>
+                    <apply>
+                        <times/>
+                        <cn cellml:units="dimensionless">2</cn>
+                        <ci>R_v</ci>
+                        <apply>
+                            <minus/>
+                            <ci>v_in</ci>
+                            <ci>v</ci>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>u_d</ci>
+                <apply>
+                    <plus/>
+                    <ci>u_C_d</ci>
+                    <apply>
+                        <times/>
+                        <cn cellml:units="dimensionless">2</cn>
+                        <ci>R_v</ci>
+                        <apply>
+                            <minus/>
+                            <ci>v</ci>
+                            <ci>v_out</ci>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+        </math>
+    </component>
+    <!--//////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////// output-BC Vessel ///////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////-->
+    <component name="pp_BC_type">
+        <variable name="t" public_interface="in" units="second"/>
+        <!-- Constitutive Parameters-->
+        <variable initial_value="0.004" name="mu" units="Js_per_m3"/>
+        <variable initial_value="1050" name="rho" units="Js2_per_m5"/>
+        <variable name="g" public_interface="in" units="m_per_s2"/>
+        <variable name="E" public_interface="in" units="J_per_m3"/>
+        <variable name="theta" public_interface="in" units="dimensionless"/>
+        <variable name="l" public_interface="in" units="metre"/>
+        <variable name="h" public_interface="out" units="metre"/>
+        <variable name="r_d" public_interface="in" units="metre"/>
+        <variable name="r_p" public_interface="in" units="metre"/>
+        <variable name="r" public_interface="out" units="metre"/>
+        <variable name="I" public_interface="out" units="Js2_per_m6"/>
+        <variable name="I_e" public_interface="out" units="Js2_per_m6"/>
+        <variable name="C" public_interface="out" units="m6_per_J"/>
+        <variable name="R" public_interface="out" units="Js_per_m6"/>
+        <variable name="R_v" public_interface="out" units="Js_per_m6"/>
+        <variable name="R_T" public_interface="in" units="Js_per_m6"/>
+        <variable name="R_T_2" public_interface="out" units="Js_per_m6"/>
+        <variable name="C_T" public_interface="in" units="m6_per_J"/>
+        <variable initial_value="0.2802" name="a" units="dimensionless"/>
+        <variable initial_value="-505.3" name="b" units="per_m"/>
+        <variable initial_value="0.1324" name="c" units="dimensionless"/>
+        <variable initial_value="-11.14" name="d" units="per_m"/>
+        <variable name="alpha" public_interface="in" units="dimensionless"/>
+        <!-- State Variables-->
+        <variable name="u_in" public_interface="in" units="J_per_m3"/>
+        <variable initial_value="0.0" name="v" public_interface="out" units="m3_per_s"/>
+        <variable name="u" public_interface="out" units="J_per_m3"/>
+        <variable name="q_0" public_interface="out" units="m3"/>
+        <variable initial_value="0.0" name="u_C" public_interface="out" units="J_per_m3"/>
+        <variable initial_value="0.0" name="u_T" public_interface="out" units="J_per_m3"/>
+        <variable initial_value="0.0" name="v_T" public_interface="out" units="m3_per_s"/>
+        <variable name="u_out" public_interface="in" units="J_per_m3"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <ci>q_0</ci>
+                <apply>
+                    <times/>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <pi/>
+                            <ci>l</ci>
+                        </apply>
+                        <cn cellml:units="dimensionless">3</cn>
+                    </apply>
+                    <apply>
+                        <plus/>
+                        <apply>
+                            <times/>
+                            <ci>r_p</ci>
+                            <ci>r_p</ci>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <ci>r_d</ci>
+                            <ci>r_p</ci>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <ci>r_d</ci>
+                            <ci>r_d</ci>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>r</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <plus/>
+                        <ci>r_p</ci>
+                        <ci>r_d</ci>
+                    </apply>
+                    <cn cellml:units="dimensionless">2</cn>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>h</ci>
+                <apply>
+                    <times/>
+                    <ci>r</ci>
+                    <apply>
+                        <plus/>
+                        <apply>
+                            <times/>
+                            <ci>a</ci>
+                            <apply>
+                                <exp/>
+                                <apply>
+                                    <times/>
+                                    <ci>b</ci>
+                                    <ci>r</ci>
+                                </apply>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <ci>c</ci>
+                            <apply>
+                                <exp/>
+                                <apply>
+                                    <times/>
+                                    <ci>d</ci>
+                                    <ci>r</ci>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>I</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <times/>
+                        <ci>rho</ci>
+                        <ci>l</ci>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <pi/>
+                        <apply>
+                            <power/>
+                            <ci>r</ci>
+                            <cn cellml:units="dimensionless">2</cn>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>I_e</ci>
+                <apply>
+                    <times/>
+                    <ci>I</ci>
+                    <cn cellml:units="dimensionless" type="e-notation">1<sep/>-6</cn>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>C</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <times/>
+                        <cn cellml:units="dimensionless">2</cn>
+                        <pi/>
+                        <apply>
+                            <power/>
+                            <ci>r</ci>
+                            <cn cellml:units="dimensionless">3</cn>
+                        </apply>
+                        <ci>l</ci>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <ci>E</ci>
+                        <ci>h</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>R</ci>
+                <apply>
+                    <times/>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <cn cellml:units="dimensionless">8</cn>
+                            <ci>mu</ci>
+                            <ci>l</ci>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <cn cellml:units="dimensionless">3</cn>
+                            <pi/>
+                        </apply>
+                    </apply>
+                    <apply>
+                        <plus/>
+                        <apply>
+                            <divide/>
+                            <cn cellml:units="dimensionless">1</cn>
+                            <apply>
+                                <times/>
+                                <apply>
+                                    <power/>
+                                    <ci>r_p</ci>
+                                    <cn cellml:units="dimensionless">3</cn>
+                                </apply>
+                                <ci>r_d</ci>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <divide/>
+                            <cn cellml:units="dimensionless">1</cn>
+                            <apply>
+                                <times/>
+                                <apply>
+                                    <power/>
+                                    <ci>r_p</ci>
+                                    <cn cellml:units="dimensionless">2</cn>
+                                </apply>
+                                <apply>
+                                    <power/>
+                                    <ci>r_d</ci>
+                                    <cn cellml:units="dimensionless">2</cn>
+                                </apply>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <divide/>
+                            <cn cellml:units="dimensionless">1</cn>
+                            <apply>
+                                <times/>
+                                <ci>r_p</ci>
+                                <apply>
+                                    <power/>
+                                    <ci>r_d</ci>
+                                    <cn cellml:units="dimensionless">3</cn>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>R_v</ci>
+                <apply>
+                    <divide/>
+                    <cn cellml:units="second">0.01</cn>
+                    <ci>C</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>R_T_2</ci>
+                <apply>
+                    <times/>
+                    <cn cellml:units="dimensionless">4</cn>
+                    <ci>R_T</ci>
+                </apply>
+            </apply>
+            <!-- Conservation Laws-->
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>v</ci>
+                </apply>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <minus/>
+                        <apply>
+                            <minus/>
+                            <apply>
+                                <minus/>
+                                <ci>u_in</ci>
+                                <ci>u</ci>
+                            </apply>
+                            <apply>
+                                <times/>
+                                <ci>R</ci>
+                                <ci>v</ci>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <ci>rho</ci>
+                            <ci>g</ci>
+                            <ci>l</ci>
+                            <apply>
+                                <cos/>
+                                <apply>
+                                    <divide/>
+                                    <apply>
+                                        <times/>
+                                        <ci>theta</ci>
+                                        <pi/>
+                                    </apply>
+                                    <cn cellml:units="dimensionless">180</cn>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </apply>
+                    <ci>I</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>u_C</ci>
+                </apply>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <minus/>
+                        <ci>v</ci>
+                        <ci>v_T</ci>
+                    </apply>
+                    <ci>C</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>u</ci>
+                <apply>
+                    <plus/>
+                    <ci>u_C</ci>
+                    <apply>
+                        <times/>
+                        <ci>R_v</ci>
+                        <apply>
+                            <minus/>
+                            <ci>v</ci>
+                            <ci>v_T</ci>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>v_T</ci>
+                </apply>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <minus/>
+                        <apply>
+                            <minus/>
+                            <apply>
+                                <minus/>
+                                <ci>u</ci>
+                                <ci>u_out</ci>
+                            </apply>
+                            <ci>u_T</ci>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <ci>alpha</ci>
+                            <ci>R_T</ci>
+                            <ci>v_T</ci>
+                        </apply>
+                    </apply>
+                    <ci>I_e</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>u_T</ci>
+                </apply>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <minus/>
+                        <ci>v_T</ci>
+                        <apply>
+                            <divide/>
+                            <ci>u_T</ci>
+                            <apply>
+                                <times/>
+                                <ci>alpha</ci>
+                                <ci>R_T_2</ci>
+                            </apply>
+                        </apply>
+                    </apply>
+                    <ci>C_T</ci>
+                </apply>
+            </apply>
+        </math>
+    </component>
+    <!--//////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////// output-BC Venous Vessel ////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////-->
+    <component name="pp_vBC_type">
+        <variable name="t" public_interface="in" units="second"/>
+        <!-- Constitutive Parameters-->
+        <variable initial_value="0.004" name="mu" units="Js_per_m3"/>
+        <variable initial_value="1050" name="rho" units="Js2_per_m5"/>
+        <variable name="g" public_interface="in" units="m_per_s2"/>
+        <variable name="E" public_interface="in" units="J_per_m3"/>
+        <variable name="theta" public_interface="in" units="dimensionless"/>
+        <variable name="l" public_interface="in" units="metre"/>
+        <variable name="h" public_interface="out" units="metre"/>
+        <variable name="r_d" public_interface="in" units="metre"/>
+        <variable name="r_p" public_interface="in" units="metre"/>
+        <variable name="r" public_interface="out" units="metre"/>
+        <variable name="I" public_interface="out" units="Js2_per_m6"/>
+        <variable name="I_e" public_interface="out" units="Js2_per_m6"/>
+        <variable name="C" public_interface="out" units="m6_per_J"/>
+        <variable name="R" public_interface="out" units="Js_per_m6"/>
+        <variable name="R_v" public_interface="out" units="Js_per_m6"/>
+        <variable name="R_T" public_interface="in" units="Js_per_m6"/>
+        <variable name="C_T" public_interface="in" units="m6_per_J"/>
+        <variable initial_value="0.2802" name="a" units="dimensionless"/>
+        <variable initial_value="-505.3" name="b" units="per_m"/>
+        <variable initial_value="0.1324" name="c" units="dimensionless"/>
+        <variable initial_value="-11.14" name="d" units="per_m"/>
+        <!-- State Variables-->
+        <variable name="u_in" public_interface="in" units="J_per_m3"/>
+        <variable initial_value="0.0" name="v" public_interface="out" units="m3_per_s"/>
+        <variable name="u" public_interface="out" units="J_per_m3"/>
+        <variable name="q_0" public_interface="out" units="m3"/>
+        <variable initial_value="0.0" name="u_C" public_interface="out" units="J_per_m3"/>
+        <variable initial_value="0.0" name="v_T" public_interface="out" units="m3_per_s"/>
+        <variable name="u_out" public_interface="in" units="J_per_m3"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <ci>q_0</ci>
+                <apply>
+                    <times/>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <pi/>
+                            <ci>l</ci>
+                        </apply>
+                        <cn cellml:units="dimensionless">3</cn>
+                    </apply>
+                    <apply>
+                        <plus/>
+                        <apply>
+                            <times/>
+                            <ci>r_p</ci>
+                            <ci>r_p</ci>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <ci>r_d</ci>
+                            <ci>r_p</ci>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <ci>r_d</ci>
+                            <ci>r_d</ci>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>r</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <plus/>
+                        <ci>r_p</ci>
+                        <ci>r_d</ci>
+                    </apply>
+                    <cn cellml:units="dimensionless">2</cn>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>h</ci>
+                <apply>
+                    <times/>
+                    <ci>r</ci>
+                    <apply>
+                        <plus/>
+                        <apply>
+                            <times/>
+                            <ci>a</ci>
+                            <apply>
+                                <exp/>
+                                <apply>
+                                    <times/>
+                                    <ci>b</ci>
+                                    <ci>r</ci>
+                                </apply>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <ci>c</ci>
+                            <apply>
+                                <exp/>
+                                <apply>
+                                    <times/>
+                                    <ci>d</ci>
+                                    <ci>r</ci>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>I</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <times/>
+                        <ci>rho</ci>
+                        <ci>l</ci>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <pi/>
+                        <apply>
+                            <power/>
+                            <ci>r</ci>
+                            <cn cellml:units="dimensionless">2</cn>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>I_e</ci>
+                <apply>
+                    <times/>
+                    <ci>I</ci>
+                    <cn cellml:units="dimensionless" type="e-notation">1<sep/>-6</cn>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>C</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <times/>
+                        <cn cellml:units="dimensionless">2</cn>
+                        <pi/>
+                        <apply>
+                            <power/>
+                            <ci>r</ci>
+                            <cn cellml:units="dimensionless">3</cn>
+                        </apply>
+                        <ci>l</ci>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <ci>E</ci>
+                        <ci>h</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>R</ci>
+                <apply>
+                    <times/>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <cn cellml:units="dimensionless">8</cn>
+                            <ci>mu</ci>
+                            <ci>l</ci>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <cn cellml:units="dimensionless">3</cn>
+                            <pi/>
+                        </apply>
+                    </apply>
+                    <apply>
+                        <plus/>
+                        <apply>
+                            <divide/>
+                            <cn cellml:units="dimensionless">1</cn>
+                            <apply>
+                                <times/>
+                                <apply>
+                                    <power/>
+                                    <ci>r_p</ci>
+                                    <cn cellml:units="dimensionless">3</cn>
+                                </apply>
+                                <ci>r_d</ci>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <divide/>
+                            <cn cellml:units="dimensionless">1</cn>
+                            <apply>
+                                <times/>
+                                <apply>
+                                    <power/>
+                                    <ci>r_p</ci>
+                                    <cn cellml:units="dimensionless">2</cn>
+                                </apply>
+                                <apply>
+                                    <power/>
+                                    <ci>r_d</ci>
+                                    <cn cellml:units="dimensionless">2</cn>
+                                </apply>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <divide/>
+                            <cn cellml:units="dimensionless">1</cn>
+                            <apply>
+                                <times/>
+                                <ci>r_p</ci>
+                                <apply>
+                                    <power/>
+                                    <ci>r_d</ci>
+                                    <cn cellml:units="dimensionless">3</cn>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>R_v</ci>
+                <apply>
+                    <divide/>
+                    <cn cellml:units="second">0.01</cn>
+                    <ci>C</ci>
+                </apply>
+            </apply>
+            <!-- Conservation Laws-->
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>v</ci>
+                </apply>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <minus/>
+                        <apply>
+                            <minus/>
+                            <apply>
+                                <minus/>
+                                <ci>u_in</ci>
+                                <ci>u</ci>
+                            </apply>
+                            <apply>
+                                <times/>
+                                <ci>R</ci>
+                                <ci>v</ci>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <ci>rho</ci>
+                            <ci>g</ci>
+                            <ci>l</ci>
+                            <apply>
+                                <cos/>
+                                <apply>
+                                    <divide/>
+                                    <apply>
+                                        <times/>
+                                        <ci>theta</ci>
+                                        <pi/>
+                                    </apply>
+                                    <cn cellml:units="dimensionless">180</cn>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </apply>
+                    <ci>I</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>u_C</ci>
+                </apply>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <minus/>
+                        <ci>v</ci>
+                        <ci>v_T</ci>
+                    </apply>
+                    <ci>C</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>u</ci>
+                <apply>
+                    <plus/>
+                    <ci>u_C</ci>
+                    <apply>
+                        <times/>
+                        <ci>R_v</ci>
+                        <apply>
+                            <minus/>
+                            <ci>v</ci>
+                            <ci>v_T</ci>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>v_T</ci>
+                </apply>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <minus/>
+                        <apply>
+                            <minus/>
+                            <ci>u</ci>
+                            <ci>u_out</ci>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <cn cellml:units="dimensionless">3.0</cn>
+                            <ci>R_T</ci>
+                            <ci>v_T</ci>
+                        </apply>
+                    </apply>
+                    <ci>I_e</ci>
+                </apply>
+            </apply>
+        </math>
+    </component>
+    <!--/////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////// Junctions //////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////-->
+    <!-- Bifurcation-->
+    <component name="pv_jII_type">
+        <variable name="t" public_interface="in" units="second"/>
+        <!-- Constitutive Parameters-->
+        <variable initial_value="0.004" name="mu" units="Js_per_m3"/>
+        <variable initial_value="1050" name="rho" units="Js2_per_m5"/>
+        <variable name="g" public_interface="in" units="m_per_s2"/>
+        <variable name="E" public_interface="in" units="J_per_m3"/>
+        <variable name="theta" public_interface="in" units="dimensionless"/>
+        <variable name="l" public_interface="in" units="metre"/>
+        <variable name="h" public_interface="out" units="metre"/>
+        <variable name="r_d" public_interface="in" units="metre"/>
+        <variable name="r_p" public_interface="in" units="metre"/>
+        <variable name="r" public_interface="out" units="metre"/>
+        <variable name="I" public_interface="out" units="Js2_per_m6"/>
+        <variable name="C" public_interface="out" units="m6_per_J"/>
+        <variable name="R" public_interface="out" units="Js_per_m6"/>
+        <variable name="R_v" public_interface="out" units="Js_per_m6"/>
+        <variable initial_value="0.2802" name="a" units="dimensionless"/>
+        <variable initial_value="-505.3" name="b" units="per_m"/>
+        <variable initial_value="0.1324" name="c" units="dimensionless"/>
+        <variable initial_value="-11.14" name="d" units="per_m"/>
+        <!-- State Variables-->
+        <variable name="u_in" public_interface="in" units="J_per_m3"/>
+        <variable initial_value="0.0" name="v" public_interface="out" units="m3_per_s"/>
+        <variable name="u" public_interface="out" units="J_per_m3"/>
+        <variable name="q_0" public_interface="out" units="m3"/>
+        <variable initial_value="0.0" name="u_C" public_interface="out" units="J_per_m3"/>
+        <variable name="v_out_1" public_interface="in" units="m3_per_s"/>
+        <variable name="v_out_2" public_interface="in" units="m3_per_s"/>
+        <!-- Constitutive Relations-->
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <ci>q_0</ci>
+                <apply>
+                    <times/>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <pi/>
+                            <ci>l</ci>
+                        </apply>
+                        <cn cellml:units="dimensionless">3</cn>
+                    </apply>
+                    <apply>
+                        <plus/>
+                        <apply>
+                            <times/>
+                            <ci>r_p</ci>
+                            <ci>r_p</ci>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <ci>r_d</ci>
+                            <ci>r_p</ci>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <ci>r_d</ci>
+                            <ci>r_d</ci>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>r</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <plus/>
+                        <ci>r_p</ci>
+                        <ci>r_d</ci>
+                    </apply>
+                    <cn cellml:units="dimensionless">2</cn>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>h</ci>
+                <apply>
+                    <times/>
+                    <ci>r</ci>
+                    <apply>
+                        <plus/>
+                        <apply>
+                            <times/>
+                            <ci>a</ci>
+                            <apply>
+                                <exp/>
+                                <apply>
+                                    <times/>
+                                    <ci>b</ci>
+                                    <ci>r</ci>
+                                </apply>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <ci>c</ci>
+                            <apply>
+                                <exp/>
+                                <apply>
+                                    <times/>
+                                    <ci>d</ci>
+                                    <ci>r</ci>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>I</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <times/>
+                        <ci>rho</ci>
+                        <ci>l</ci>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <pi/>
+                        <apply>
+                            <power/>
+                            <ci>r</ci>
+                            <cn cellml:units="dimensionless">2</cn>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>C</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <times/>
+                        <cn cellml:units="dimensionless">2</cn>
+                        <pi/>
+                        <apply>
+                            <power/>
+                            <ci>r</ci>
+                            <cn cellml:units="dimensionless">3</cn>
+                        </apply>
+                        <ci>l</ci>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <ci>E</ci>
+                        <ci>h</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>R</ci>
+                <apply>
+                    <times/>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <cn cellml:units="dimensionless">8</cn>
+                            <ci>mu</ci>
+                            <ci>l</ci>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <cn cellml:units="dimensionless">3</cn>
+                            <pi/>
+                        </apply>
+                    </apply>
+                    <apply>
+                        <plus/>
+                        <apply>
+                            <divide/>
+                            <cn cellml:units="dimensionless">1</cn>
+                            <apply>
+                                <times/>
+                                <apply>
+                                    <power/>
+                                    <ci>r_p</ci>
+                                    <cn cellml:units="dimensionless">3</cn>
+                                </apply>
+                                <ci>r_d</ci>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <divide/>
+                            <cn cellml:units="dimensionless">1</cn>
+                            <apply>
+                                <times/>
+                                <apply>
+                                    <power/>
+                                    <ci>r_p</ci>
+                                    <cn cellml:units="dimensionless">2</cn>
+                                </apply>
+                                <apply>
+                                    <power/>
+                                    <ci>r_d</ci>
+                                    <cn cellml:units="dimensionless">2</cn>
+                                </apply>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <divide/>
+                            <cn cellml:units="dimensionless">1</cn>
+                            <apply>
+                                <times/>
+                                <ci>r_p</ci>
+                                <apply>
+                                    <power/>
+                                    <ci>r_d</ci>
+                                    <cn cellml:units="dimensionless">3</cn>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>R_v</ci>
+                <apply>
+                    <divide/>
+                    <cn cellml:units="second">0.01</cn>
+                    <ci>C</ci>
+                </apply>
+            </apply>
+            <!-- Conservation Laws-->
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>v</ci>
+                </apply>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <minus/>
+                        <apply>
+                            <minus/>
+                            <apply>
+                                <minus/>
+                                <ci>u_in</ci>
+                                <ci>u</ci>
+                            </apply>
+                            <apply>
+                                <times/>
+                                <ci>R</ci>
+                                <ci>v</ci>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <ci>rho</ci>
+                            <ci>g</ci>
+                            <ci>l</ci>
+                            <apply>
+                                <cos/>
+                                <apply>
+                                    <divide/>
+                                    <apply>
+                                        <times/>
+                                        <ci>theta</ci>
+                                        <pi/>
+                                    </apply>
+                                    <cn cellml:units="dimensionless">180</cn>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </apply>
+                    <ci>I</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>u_C</ci>
+                </apply>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <minus/>
+                        <apply>
+                            <minus/>
+                            <ci>v</ci>
+                            <ci>v_out_1</ci>
+                        </apply>
+                        <ci>v_out_2</ci>
+                    </apply>
+                    <ci>C</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>u</ci>
+                <apply>
+                    <plus/>
+                    <ci>u_C</ci>
+                    <apply>
+                        <times/>
+                        <ci>R_v</ci>
+                        <apply>
+                            <minus/>
+                            <apply>
+                                <minus/>
+                                <ci>v</ci>
+                                <ci>v_out_1</ci>
+                            </apply>
+                            <ci>v_out_2</ci>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+        </math>
+    </component>
+    <!--&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-//
+&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-//-->
+    <!-- Merging-->
+    <component name="vv_jII_type">
+        <variable name="t" public_interface="in" units="second"/>
+        <!-- Constitutive Parameters-->
+        <variable initial_value="0.004" name="mu" units="Js_per_m3"/>
+        <variable initial_value="1050" name="rho" units="Js2_per_m5"/>
+        <variable name="g" public_interface="in" units="m_per_s2"/>
+        <variable name="E" public_interface="in" units="J_per_m3"/>
+        <variable name="theta" public_interface="in" units="dimensionless"/>
+        <variable name="l" public_interface="in" units="metre"/>
+        <variable name="h" public_interface="out" units="metre"/>
+        <variable name="r" public_interface="out" units="metre"/>
+        <variable name="r_d" public_interface="in" units="metre"/>
+        <variable name="r_p" public_interface="in" units="metre"/>
+        <variable name="I" public_interface="out" units="Js2_per_m6"/>
+        <variable name="C" public_interface="out" units="m6_per_J"/>
+        <variable name="R" public_interface="out" units="Js_per_m6"/>
+        <variable name="R_v" public_interface="out" units="Js_per_m6"/>
+        <variable initial_value="0.2802" name="a" units="dimensionless"/>
+        <variable initial_value="-505.3" name="b" units="per_m"/>
+        <variable initial_value="0.1324" name="c" units="dimensionless"/>
+        <variable initial_value="-11.14" name="d" units="per_m"/>
+        <!-- State Variables-->
+        <variable name="v_in_1" public_interface="in" units="m3_per_s"/>
+        <variable name="v_in_2" public_interface="in" units="m3_per_s"/>
+        <variable name="u" public_interface="out" units="J_per_m3"/>
+        <variable initial_value="0.0" name="u_C" public_interface="out" units="J_per_m3"/>
+        <variable initial_value="0.0" name="v" public_interface="out" units="m3_per_s"/>
+        <variable name="u_d" public_interface="out" units="J_per_m3"/>
+        <variable name="q_0" public_interface="out" units="m3"/>
+        <variable initial_value="0.0" name="u_C_d" public_interface="out" units="J_per_m3"/>
+        <variable name="v_out_1" public_interface="in" units="m3_per_s"/>
+        <variable name="v_out_2" public_interface="in" units="m3_per_s"/>
+        <!-- Constitutive Relations-->
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <ci>q_0</ci>
+                <apply>
+                    <times/>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <pi/>
+                            <ci>l</ci>
+                        </apply>
+                        <cn cellml:units="dimensionless">3</cn>
+                    </apply>
+                    <apply>
+                        <plus/>
+                        <apply>
+                            <times/>
+                            <ci>r_p</ci>
+                            <ci>r_p</ci>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <ci>r_d</ci>
+                            <ci>r_p</ci>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <ci>r_d</ci>
+                            <ci>r_d</ci>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>r</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <plus/>
+                        <ci>r_p</ci>
+                        <ci>r_d</ci>
+                    </apply>
+                    <cn cellml:units="dimensionless">2</cn>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>h</ci>
+                <apply>
+                    <times/>
+                    <ci>r</ci>
+                    <apply>
+                        <plus/>
+                        <apply>
+                            <times/>
+                            <ci>a</ci>
+                            <apply>
+                                <exp/>
+                                <apply>
+                                    <times/>
+                                    <ci>b</ci>
+                                    <ci>r</ci>
+                                </apply>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <ci>c</ci>
+                            <apply>
+                                <exp/>
+                                <apply>
+                                    <times/>
+                                    <ci>d</ci>
+                                    <ci>r</ci>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>I</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <times/>
+                        <ci>rho</ci>
+                        <ci>l</ci>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <pi/>
+                        <apply>
+                            <power/>
+                            <ci>r</ci>
+                            <cn cellml:units="dimensionless">2</cn>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>C</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <times/>
+                        <cn cellml:units="dimensionless">2</cn>
+                        <pi/>
+                        <apply>
+                            <power/>
+                            <ci>r</ci>
+                            <cn cellml:units="dimensionless">3</cn>
+                        </apply>
+                        <ci>l</ci>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <ci>E</ci>
+                        <ci>h</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>R</ci>
+                <apply>
+                    <times/>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <cn cellml:units="dimensionless">8</cn>
+                            <ci>mu</ci>
+                            <ci>l</ci>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <cn cellml:units="dimensionless">3</cn>
+                            <pi/>
+                        </apply>
+                    </apply>
+                    <apply>
+                        <plus/>
+                        <apply>
+                            <divide/>
+                            <cn cellml:units="dimensionless">1</cn>
+                            <apply>
+                                <times/>
+                                <apply>
+                                    <power/>
+                                    <ci>r_p</ci>
+                                    <cn cellml:units="dimensionless">3</cn>
+                                </apply>
+                                <ci>r_d</ci>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <divide/>
+                            <cn cellml:units="dimensionless">1</cn>
+                            <apply>
+                                <times/>
+                                <apply>
+                                    <power/>
+                                    <ci>r_p</ci>
+                                    <cn cellml:units="dimensionless">2</cn>
+                                </apply>
+                                <apply>
+                                    <power/>
+                                    <ci>r_d</ci>
+                                    <cn cellml:units="dimensionless">2</cn>
+                                </apply>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <divide/>
+                            <cn cellml:units="dimensionless">1</cn>
+                            <apply>
+                                <times/>
+                                <ci>r_p</ci>
+                                <apply>
+                                    <power/>
+                                    <ci>r_d</ci>
+                                    <cn cellml:units="dimensionless">3</cn>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>R_v</ci>
+                <apply>
+                    <divide/>
+                    <cn cellml:units="second">0.01</cn>
+                    <ci>C</ci>
+                </apply>
+            </apply>
+            <!-- Conservation Laws-->
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>v</ci>
+                </apply>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <minus/>
+                        <apply>
+                            <minus/>
+                            <apply>
+                                <minus/>
+                                <ci>u</ci>
+                                <ci>u_d</ci>
+                            </apply>
+                            <apply>
+                                <times/>
+                                <ci>R</ci>
+                                <ci>v</ci>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <ci>rho</ci>
+                            <ci>g</ci>
+                            <ci>l</ci>
+                            <apply>
+                                <cos/>
+                                <apply>
+                                    <divide/>
+                                    <apply>
+                                        <times/>
+                                        <ci>theta</ci>
+                                        <pi/>
+                                    </apply>
+                                    <cn cellml:units="dimensionless">180</cn>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </apply>
+                    <ci>I</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>u_C</ci>
+                </apply>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <minus/>
+                        <apply>
+                            <plus/>
+                            <ci>v_in_1</ci>
+                            <ci>v_in_2</ci>
+                        </apply>
+                        <ci>v</ci>
+                    </apply>
+                    <apply>
+                        <divide/>
+                        <ci>C</ci>
+                        <cn cellml:units="dimensionless">2</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>u_C_d</ci>
+                </apply>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <minus/>
+                        <apply>
+                            <minus/>
+                            <ci>v</ci>
+                            <ci>v_out_1</ci>
+                        </apply>
+                        <ci>v_out_2</ci>
+                    </apply>
+                    <apply>
+                        <divide/>
+                        <ci>C</ci>
+                        <cn cellml:units="dimensionless">2</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>u</ci>
+                <apply>
+                    <plus/>
+                    <ci>u_C</ci>
+                    <apply>
+                        <times/>
+                        <cn cellml:units="dimensionless">2</cn>
+                        <ci>R_v</ci>
+                        <apply>
+                            <minus/>
+                            <apply>
+                                <plus/>
+                                <ci>v_in_1</ci>
+                                <ci>v_in_2</ci>
+                            </apply>
+                            <ci>v</ci>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>u_d</ci>
+                <apply>
+                    <plus/>
+                    <ci>u_C_d</ci>
+                    <apply>
+                        <times/>
+                        <cn cellml:units="dimensionless">2</cn>
+                        <ci>R_v</ci>
+                        <apply>
+                            <minus/>
+                            <apply>
+                                <minus/>
+                                <ci>v</ci>
+                                <ci>v_out_1</ci>
+                            </apply>
+                            <ci>v_out_2</ci>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+        </math>
+    </component>
+    <!-- Vein Merging-->
+    <component name="vp_jII_type">
+        <variable name="t" public_interface="in" units="second"/>
+        <!-- Constitutive Parameters-->
+        <variable initial_value="0.004" name="mu" units="Js_per_m3"/>
+        <variable initial_value="1050" name="rho" units="Js2_per_m5"/>
+        <variable name="g" public_interface="in" units="m_per_s2"/>
+        <variable name="E" public_interface="in" units="J_per_m3"/>
+        <variable name="theta" public_interface="in" units="dimensionless"/>
+        <variable name="l" public_interface="in" units="metre"/>
+        <variable name="h" public_interface="out" units="metre"/>
+        <variable name="r_d" public_interface="in" units="metre"/>
+        <variable name="r_p" public_interface="in" units="metre"/>
+        <variable name="r" public_interface="out" units="metre"/>
+        <variable name="I" public_interface="out" units="Js2_per_m6"/>
+        <variable name="C" public_interface="out" units="m6_per_J"/>
+        <variable name="R" public_interface="out" units="Js_per_m6"/>
+        <variable name="R_v" public_interface="out" units="Js_per_m6"/>
+        <variable initial_value="0.2802" name="a" units="dimensionless"/>
+        <variable initial_value="-505.3" name="b" units="per_m"/>
+        <variable initial_value="0.1324" name="c" units="dimensionless"/>
+        <variable initial_value="-11.14" name="d" units="per_m"/>
+        <!-- State Variables-->
+        <variable name="v_in_1" public_interface="in" units="m3_per_s"/>
+        <variable name="v_in_2" public_interface="in" units="m3_per_s"/>
+        <variable name="u" public_interface="out" units="J_per_m3"/>
+        <variable name="q_0" public_interface="out" units="m3"/>
+        <variable initial_value="0.0" name="u_C" public_interface="out" units="J_per_m3"/>
+        <variable initial_value="0.0" name="v" public_interface="out" units="m3_per_s"/>
+        <variable name="u_out" public_interface="in" units="J_per_m3"/>
+        <!-- Constitutive Relations-->
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <ci>q_0</ci>
+                <apply>
+                    <times/>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <pi/>
+                            <ci>l</ci>
+                        </apply>
+                        <cn cellml:units="dimensionless">3</cn>
+                    </apply>
+                    <apply>
+                        <plus/>
+                        <apply>
+                            <times/>
+                            <ci>r_p</ci>
+                            <ci>r_p</ci>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <ci>r_d</ci>
+                            <ci>r_p</ci>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <ci>r_d</ci>
+                            <ci>r_d</ci>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>r</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <plus/>
+                        <ci>r_p</ci>
+                        <ci>r_d</ci>
+                    </apply>
+                    <cn cellml:units="dimensionless">2</cn>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>h</ci>
+                <apply>
+                    <times/>
+                    <ci>r</ci>
+                    <apply>
+                        <plus/>
+                        <apply>
+                            <times/>
+                            <ci>a</ci>
+                            <apply>
+                                <exp/>
+                                <apply>
+                                    <times/>
+                                    <ci>b</ci>
+                                    <ci>r</ci>
+                                </apply>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <ci>c</ci>
+                            <apply>
+                                <exp/>
+                                <apply>
+                                    <times/>
+                                    <ci>d</ci>
+                                    <ci>r</ci>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>I</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <times/>
+                        <ci>rho</ci>
+                        <ci>l</ci>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <pi/>
+                        <apply>
+                            <power/>
+                            <ci>r</ci>
+                            <cn cellml:units="dimensionless">2</cn>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>C</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <times/>
+                        <cn cellml:units="dimensionless">2</cn>
+                        <pi/>
+                        <apply>
+                            <power/>
+                            <ci>r</ci>
+                            <cn cellml:units="dimensionless">3</cn>
+                        </apply>
+                        <ci>l</ci>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <ci>E</ci>
+                        <ci>h</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>R</ci>
+                <apply>
+                    <times/>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <cn cellml:units="dimensionless">8</cn>
+                            <ci>mu</ci>
+                            <ci>l</ci>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <cn cellml:units="dimensionless">3</cn>
+                            <pi/>
+                        </apply>
+                    </apply>
+                    <apply>
+                        <plus/>
+                        <apply>
+                            <divide/>
+                            <cn cellml:units="dimensionless">1</cn>
+                            <apply>
+                                <times/>
+                                <apply>
+                                    <power/>
+                                    <ci>r_p</ci>
+                                    <cn cellml:units="dimensionless">3</cn>
+                                </apply>
+                                <ci>r_d</ci>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <divide/>
+                            <cn cellml:units="dimensionless">1</cn>
+                            <apply>
+                                <times/>
+                                <apply>
+                                    <power/>
+                                    <ci>r_p</ci>
+                                    <cn cellml:units="dimensionless">2</cn>
+                                </apply>
+                                <apply>
+                                    <power/>
+                                    <ci>r_d</ci>
+                                    <cn cellml:units="dimensionless">2</cn>
+                                </apply>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <divide/>
+                            <cn cellml:units="dimensionless">1</cn>
+                            <apply>
+                                <times/>
+                                <ci>r_p</ci>
+                                <apply>
+                                    <power/>
+                                    <ci>r_d</ci>
+                                    <cn cellml:units="dimensionless">3</cn>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>R_v</ci>
+                <apply>
+                    <divide/>
+                    <cn cellml:units="second">0.01</cn>
+                    <ci>C</ci>
+                </apply>
+            </apply>
+            <!-- Conservation Laws-->
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>v</ci>
+                </apply>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <minus/>
+                        <apply>
+                            <minus/>
+                            <apply>
+                                <minus/>
+                                <ci>u</ci>
+                                <ci>u_out</ci>
+                            </apply>
+                            <apply>
+                                <times/>
+                                <ci>R</ci>
+                                <ci>v</ci>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <ci>rho</ci>
+                            <ci>g</ci>
+                            <ci>l</ci>
+                            <apply>
+                                <cos/>
+                                <apply>
+                                    <divide/>
+                                    <apply>
+                                        <times/>
+                                        <ci>theta</ci>
+                                        <pi/>
+                                    </apply>
+                                    <cn cellml:units="dimensionless">180</cn>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </apply>
+                    <ci>I</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>u_C</ci>
+                </apply>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <minus/>
+                        <apply>
+                            <plus/>
+                            <ci>v_in_1</ci>
+                            <ci>v_in_2</ci>
+                        </apply>
+                        <ci>v</ci>
+                    </apply>
+                    <ci>C</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>u</ci>
+                <apply>
+                    <plus/>
+                    <ci>u_C</ci>
+                    <apply>
+                        <times/>
+                        <ci>R_v</ci>
+                        <apply>
+                            <minus/>
+                            <apply>
+                                <plus/>
+                                <ci>v_in_1</ci>
+                                <ci>v_in_2</ci>
+                            </apply>
+                            <ci>v</ci>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+        </math>
+    </component>
+    <!--//////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////// Advection Vessel ///////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////-->
+    <component name="adv_type">
+        <variable name="t" public_interface="in" units="second"/>
+        <!-- Parameters-->
+        <variable name="K" public_interface="in" units="m3_per_s"/>
+        <variable name="l" public_interface="in" units="metre"/>
+        <variable name="r" public_interface="in" units="metre"/>
+        <!-- State variables-->
+        <variable initial_value="0" name="q" public_interface="out" units="mole"/>
+        <variable name="q_in" public_interface="in" units="mole"/>
+        <variable name="v" public_interface="out" units="mol_per_s"/>
+        <variable name="v_out" public_interface="in" units="mol_per_s"/>
+        <!-- Conservation laws-->
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>q</ci>
+                </apply>
+                <apply>
+                    <minus/>
+                    <ci>v</ci>
+                    <ci>v_out</ci>
+                </apply>
+            </apply>
+            <!-- Constitutive relations-->
+            <apply>
+                <eq/>
+                <ci>v</ci>
+                <apply>
+                    <times/>
+                    <apply>
+                        <divide/>
+                        <ci>K</ci>
+                        <apply>
+                            <times/>
+                            <pi/>
+                            <apply>
+                                <power/>
+                                <ci>r</ci>
+                                <cn cellml:units="dimensionless">2</cn>
+                            </apply>
+                            <ci>l</ci>
+                        </apply>
+                    </apply>
+                    <apply>
+                        <minus/>
+                        <ci>q_in</ci>
+                        <ci>q</ci>
+                    </apply>
+                </apply>
+            </apply>
+        </math>
+    </component>
+    <!--&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-//
+&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-//-->
+    <component name="pv_adv_type">
+        <variable name="t" public_interface="in" units="second"/>
+        <!-- Constitutive Parameters-->
+        <variable initial_value="0.004" name="mu" units="Js_per_m3"/>
+        <variable initial_value="1050" name="rho" units="Js2_per_m5"/>
+        <variable name="g" public_interface="in" units="m_per_s2"/>
+        <variable name="E" public_interface="in" units="J_per_m3"/>
+        <variable name="theta" public_interface="in" units="dimensionless"/>
+        <variable name="l" public_interface="in" units="metre"/>
+        <variable name="h" public_interface="out" units="metre"/>
+        <variable name="r_d" public_interface="in" units="metre"/>
+        <variable name="r_p" public_interface="in" units="metre"/>
+        <variable name="r" public_interface="out" units="metre"/>
+        <variable name="I" public_interface="out" units="Js2_per_m6"/>
+        <variable name="C" public_interface="out" units="m6_per_J"/>
+        <variable name="R" public_interface="out" units="Js_per_m6"/>
+        <variable name="R_v" public_interface="out" units="Js_per_m6"/>
+        <variable initial_value="0.2802" name="a" units="dimensionless"/>
+        <variable initial_value="-505.3" name="b" units="per_m"/>
+        <variable initial_value="0.1324" name="c" units="dimensionless"/>
+        <variable initial_value="-11.14" name="d" units="per_m"/>
+        <!-- State Variables-->
+        <variable name="u_in" public_interface="in" units="J_per_m3"/>
+        <variable initial_value="0.0" name="v" public_interface="out" units="m3_per_s"/>
+        <variable name="u" public_interface="out" units="J_per_m3"/>
+        <variable name="q_0" public_interface="out" units="m3"/>
+        <variable initial_value="0.0" name="u_C" public_interface="out" units="J_per_m3"/>
+        <variable name="v_out" public_interface="in" units="m3_per_s"/>
+        <!-- Constitutive Relations-->
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <ci>q_0</ci>
+                <apply>
+                    <times/>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <pi/>
+                            <ci>l</ci>
+                        </apply>
+                        <cn cellml:units="dimensionless">3</cn>
+                    </apply>
+                    <apply>
+                        <plus/>
+                        <apply>
+                            <times/>
+                            <ci>r_p</ci>
+                            <ci>r_p</ci>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <ci>r_d</ci>
+                            <ci>r_p</ci>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <ci>r_d</ci>
+                            <ci>r_d</ci>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>r</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <plus/>
+                        <ci>r_p</ci>
+                        <ci>r_d</ci>
+                    </apply>
+                    <cn cellml:units="dimensionless">2</cn>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>h</ci>
+                <apply>
+                    <times/>
+                    <ci>r</ci>
+                    <apply>
+                        <plus/>
+                        <apply>
+                            <times/>
+                            <ci>a</ci>
+                            <apply>
+                                <exp/>
+                                <apply>
+                                    <times/>
+                                    <ci>b</ci>
+                                    <ci>r</ci>
+                                </apply>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <ci>c</ci>
+                            <apply>
+                                <exp/>
+                                <apply>
+                                    <times/>
+                                    <ci>d</ci>
+                                    <ci>r</ci>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>I</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <times/>
+                        <ci>rho</ci>
+                        <ci>l</ci>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <pi/>
+                        <apply>
+                            <power/>
+                            <ci>r</ci>
+                            <cn cellml:units="dimensionless">2</cn>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>C</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <times/>
+                        <cn cellml:units="dimensionless">2</cn>
+                        <pi/>
+                        <apply>
+                            <power/>
+                            <ci>r</ci>
+                            <cn cellml:units="dimensionless">3</cn>
+                        </apply>
+                        <ci>l</ci>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <ci>E</ci>
+                        <ci>h</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>R</ci>
+                <apply>
+                    <times/>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <cn cellml:units="dimensionless">8</cn>
+                            <ci>mu</ci>
+                            <ci>l</ci>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <cn cellml:units="dimensionless">3</cn>
+                            <pi/>
+                        </apply>
+                    </apply>
+                    <apply>
+                        <plus/>
+                        <apply>
+                            <divide/>
+                            <cn cellml:units="dimensionless">1</cn>
+                            <apply>
+                                <times/>
+                                <apply>
+                                    <power/>
+                                    <ci>r_p</ci>
+                                    <cn cellml:units="dimensionless">3</cn>
+                                </apply>
+                                <ci>r_d</ci>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <divide/>
+                            <cn cellml:units="dimensionless">1</cn>
+                            <apply>
+                                <times/>
+                                <apply>
+                                    <power/>
+                                    <ci>r_p</ci>
+                                    <cn cellml:units="dimensionless">2</cn>
+                                </apply>
+                                <apply>
+                                    <power/>
+                                    <ci>r_d</ci>
+                                    <cn cellml:units="dimensionless">2</cn>
+                                </apply>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <divide/>
+                            <cn cellml:units="dimensionless">1</cn>
+                            <apply>
+                                <times/>
+                                <ci>r_p</ci>
+                                <apply>
+                                    <power/>
+                                    <ci>r_d</ci>
+                                    <cn cellml:units="dimensionless">3</cn>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>R_v</ci>
+                <apply>
+                    <divide/>
+                    <cn cellml:units="second">0.01</cn>
+                    <ci>C</ci>
+                </apply>
+            </apply>
+            <!-- Conservation Laws-->
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>v</ci>
+                </apply>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <minus/>
+                        <apply>
+                            <minus/>
+                            <apply>
+                                <minus/>
+                                <ci>u_in</ci>
+                                <ci>u</ci>
+                            </apply>
+                            <apply>
+                                <times/>
+                                <ci>R</ci>
+                                <ci>v</ci>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <ci>rho</ci>
+                            <ci>g</ci>
+                            <ci>l</ci>
+                            <apply>
+                                <cos/>
+                                <apply>
+                                    <divide/>
+                                    <apply>
+                                        <times/>
+                                        <ci>theta</ci>
+                                        <pi/>
+                                    </apply>
+                                    <cn cellml:units="dimensionless">180</cn>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </apply>
+                    <ci>I</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>u_C</ci>
+                </apply>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <minus/>
+                        <ci>v</ci>
+                        <ci>v_out</ci>
+                    </apply>
+                    <ci>C</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>u</ci>
+                <apply>
+                    <plus/>
+                    <ci>u_C</ci>
+                    <apply>
+                        <times/>
+                        <ci>R_v</ci>
+                        <apply>
+                            <minus/>
+                            <ci>v</ci>
+                            <ci>v_out</ci>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+        </math>
+        <!-- State variables-->
+        <variable initial_value="0" name="q" public_interface="out" units="mole"/>
+        <variable name="q_in" public_interface="in" units="mole"/>
+        <variable name="v_conc" public_interface="out" units="mol_per_s"/>
+        <variable name="v_conc_out" public_interface="in" units="mol_per_s"/>
+        <!-- Conservation laws-->
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>q</ci>
+                </apply>
+                <apply>
+                    <minus/>
+                    <ci>v_conc</ci>
+                    <ci>v_conc_out</ci>
+                </apply>
+            </apply>
+            <!-- Constitutive relations-->
+            <apply>
+                <eq/>
+                <ci>v_conc</ci>
+                <apply>
+                    <times/>
+                    <apply>
+                        <divide/>
+                        <ci>v</ci>
+                        <apply>
+                            <times/>
+                            <pi/>
+                            <apply>
+                                <power/>
+                                <ci>r</ci>
+                                <cn cellml:units="dimensionless">2</cn>
+                            </apply>
+                            <ci>l</ci>
+                        </apply>
+                    </apply>
+                    <apply>
+                        <minus/>
+                        <ci>q_in</ci>
+                        <ci>q</ci>
+                    </apply>
+                </apply>
+            </apply>
+        </math>
+    </component>
+    <!--&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-//
+&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-//-->
+    <component name="pv_jII_adv_type">
+        <variable name="t" public_interface="in" units="second"/>
+        <!-- Constitutive Parameters-->
+        <variable initial_value="0.004" name="mu" units="Js_per_m3"/>
+        <variable initial_value="1050" name="rho" units="Js2_per_m5"/>
+        <variable name="g" public_interface="in" units="m_per_s2"/>
+        <variable name="E" public_interface="in" units="J_per_m3"/>
+        <variable name="theta" public_interface="in" units="dimensionless"/>
+        <variable name="l" public_interface="in" units="metre"/>
+        <variable name="h" public_interface="out" units="metre"/>
+        <variable name="r_d" public_interface="in" units="metre"/>
+        <variable name="r_p" public_interface="in" units="metre"/>
+        <variable name="r" public_interface="out" units="metre"/>
+        <variable name="I" public_interface="out" units="Js2_per_m6"/>
+        <variable name="C" public_interface="out" units="m6_per_J"/>
+        <variable name="R" public_interface="out" units="Js_per_m6"/>
+        <variable name="R_v" public_interface="out" units="Js_per_m6"/>
+        <variable initial_value="0.2802" name="a" units="dimensionless"/>
+        <variable initial_value="-505.3" name="b" units="per_m"/>
+        <variable initial_value="0.1324" name="c" units="dimensionless"/>
+        <variable initial_value="-11.14" name="d" units="per_m"/>
+        <!-- State Variables-->
+        <variable name="u_in" public_interface="in" units="J_per_m3"/>
+        <variable initial_value="0.0" name="v" public_interface="out" units="m3_per_s"/>
+        <variable name="u" public_interface="out" units="J_per_m3"/>
+        <variable name="q_0" public_interface="out" units="m3"/>
+        <variable initial_value="0.0" name="u_C" public_interface="out" units="J_per_m3"/>
+        <variable name="v_out_1" public_interface="in" units="m3_per_s"/>
+        <variable name="v_out_2" public_interface="in" units="m3_per_s"/>
+        <!-- Constitutive Relations-->
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <ci>q_0</ci>
+                <apply>
+                    <times/>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <pi/>
+                            <ci>l</ci>
+                        </apply>
+                        <cn cellml:units="dimensionless">3</cn>
+                    </apply>
+                    <apply>
+                        <plus/>
+                        <apply>
+                            <times/>
+                            <ci>r_p</ci>
+                            <ci>r_p</ci>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <ci>r_d</ci>
+                            <ci>r_p</ci>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <ci>r_d</ci>
+                            <ci>r_d</ci>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>r</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <plus/>
+                        <ci>r_p</ci>
+                        <ci>r_d</ci>
+                    </apply>
+                    <cn cellml:units="dimensionless">2</cn>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>h</ci>
+                <apply>
+                    <times/>
+                    <ci>r</ci>
+                    <apply>
+                        <plus/>
+                        <apply>
+                            <times/>
+                            <ci>a</ci>
+                            <apply>
+                                <exp/>
+                                <apply>
+                                    <times/>
+                                    <ci>b</ci>
+                                    <ci>r</ci>
+                                </apply>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <ci>c</ci>
+                            <apply>
+                                <exp/>
+                                <apply>
+                                    <times/>
+                                    <ci>d</ci>
+                                    <ci>r</ci>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>I</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <times/>
+                        <ci>rho</ci>
+                        <ci>l</ci>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <pi/>
+                        <apply>
+                            <power/>
+                            <ci>r</ci>
+                            <cn cellml:units="dimensionless">2</cn>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>C</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <times/>
+                        <cn cellml:units="dimensionless">2</cn>
+                        <pi/>
+                        <apply>
+                            <power/>
+                            <ci>r</ci>
+                            <cn cellml:units="dimensionless">3</cn>
+                        </apply>
+                        <ci>l</ci>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <ci>E</ci>
+                        <ci>h</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>R</ci>
+                <apply>
+                    <times/>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <cn cellml:units="dimensionless">8</cn>
+                            <ci>mu</ci>
+                            <ci>l</ci>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <cn cellml:units="dimensionless">3</cn>
+                            <pi/>
+                        </apply>
+                    </apply>
+                    <apply>
+                        <plus/>
+                        <apply>
+                            <divide/>
+                            <cn cellml:units="dimensionless">1</cn>
+                            <apply>
+                                <times/>
+                                <apply>
+                                    <power/>
+                                    <ci>r_p</ci>
+                                    <cn cellml:units="dimensionless">3</cn>
+                                </apply>
+                                <ci>r_d</ci>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <divide/>
+                            <cn cellml:units="dimensionless">1</cn>
+                            <apply>
+                                <times/>
+                                <apply>
+                                    <power/>
+                                    <ci>r_p</ci>
+                                    <cn cellml:units="dimensionless">2</cn>
+                                </apply>
+                                <apply>
+                                    <power/>
+                                    <ci>r_d</ci>
+                                    <cn cellml:units="dimensionless">2</cn>
+                                </apply>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <divide/>
+                            <cn cellml:units="dimensionless">1</cn>
+                            <apply>
+                                <times/>
+                                <ci>r_p</ci>
+                                <apply>
+                                    <power/>
+                                    <ci>r_d</ci>
+                                    <cn cellml:units="dimensionless">3</cn>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>R_v</ci>
+                <apply>
+                    <divide/>
+                    <cn cellml:units="second">0.01</cn>
+                    <ci>C</ci>
+                </apply>
+            </apply>
+            <!-- Conservation Laws-->
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>v</ci>
+                </apply>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <minus/>
+                        <apply>
+                            <minus/>
+                            <apply>
+                                <minus/>
+                                <ci>u_in</ci>
+                                <ci>u</ci>
+                            </apply>
+                            <apply>
+                                <times/>
+                                <ci>R</ci>
+                                <ci>v</ci>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <ci>rho</ci>
+                            <ci>g</ci>
+                            <ci>l</ci>
+                            <apply>
+                                <cos/>
+                                <apply>
+                                    <divide/>
+                                    <apply>
+                                        <times/>
+                                        <ci>theta</ci>
+                                        <pi/>
+                                    </apply>
+                                    <cn cellml:units="dimensionless">180</cn>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </apply>
+                    <ci>I</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>u_C</ci>
+                </apply>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <minus/>
+                        <apply>
+                            <minus/>
+                            <ci>v</ci>
+                            <ci>v_out_1</ci>
+                        </apply>
+                        <ci>v_out_2</ci>
+                    </apply>
+                    <ci>C</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>u</ci>
+                <apply>
+                    <plus/>
+                    <ci>u_C</ci>
+                    <apply>
+                        <times/>
+                        <ci>R_v</ci>
+                        <apply>
+                            <minus/>
+                            <apply>
+                                <minus/>
+                                <ci>v</ci>
+                                <ci>v_out_1</ci>
+                            </apply>
+                            <ci>v_out_2</ci>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+        </math>
+        <!-- State variables-->
+        <variable initial_value="0" name="q" public_interface="out" units="mole"/>
+        <variable name="q_in" public_interface="in" units="mole"/>
+        <variable name="v_conc" public_interface="out" units="mol_per_s"/>
+        <variable name="v_conc_out_1" public_interface="in" units="mol_per_s"/>
+        <variable name="v_conc_out_2" public_interface="in" units="mol_per_s"/>
+        <!-- Conservation laws-->
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>q</ci>
+                </apply>
+                <apply>
+                    <minus/>
+                    <apply>
+                        <minus/>
+                        <ci>v_conc</ci>
+                        <ci>v_conc_out_1</ci>
+                    </apply>
+                    <ci>v_conc_out_2</ci>
+                </apply>
+            </apply>
+            <!-- Constitutive relations-->
+            <apply>
+                <eq/>
+                <ci>v_conc</ci>
+                <apply>
+                    <times/>
+                    <apply>
+                        <divide/>
+                        <ci>v</ci>
+                        <apply>
+                            <times/>
+                            <pi/>
+                            <apply>
+                                <power/>
+                                <ci>r</ci>
+                                <cn cellml:units="dimensionless">2</cn>
+                            </apply>
+                            <ci>l</ci>
+                        </apply>
+                    </apply>
+                    <apply>
+                        <minus/>
+                        <ci>q_in</ci>
+                        <ci>q</ci>
+                    </apply>
+                </apply>
+            </apply>
+        </math>
+    </component>
+    <!--&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-//
+&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-//-->
+    <component name="pp_BC_adv_type">
+        <variable name="t" public_interface="in" units="second"/>
+        <!-- Constitutive Parameters-->
+        <variable initial_value="0.004" name="mu" units="Js_per_m3"/>
+        <variable initial_value="1050" name="rho" units="Js2_per_m5"/>
+        <variable name="g" public_interface="in" units="m_per_s2"/>
+        <variable name="E" public_interface="in" units="J_per_m3"/>
+        <variable name="theta" public_interface="in" units="dimensionless"/>
+        <variable name="l" public_interface="in" units="metre"/>
+        <variable name="h" public_interface="out" units="metre"/>
+        <variable name="r_d" public_interface="in" units="metre"/>
+        <variable name="r_p" public_interface="in" units="metre"/>
+        <variable name="r" public_interface="out" units="metre"/>
+        <variable name="I" public_interface="out" units="Js2_per_m6"/>
+        <variable name="I_e" public_interface="out" units="Js2_per_m6"/>
+        <variable name="C" public_interface="out" units="m6_per_J"/>
+        <variable name="R" public_interface="out" units="Js_per_m6"/>
+        <variable name="R_v" public_interface="out" units="Js_per_m6"/>
+        <variable name="R_T" public_interface="in" units="Js_per_m6"/>
+        <variable name="R_T_2" public_interface="in" units="Js_per_m6"/>
+        <variable name="C_T" public_interface="in" units="m6_per_J"/>
+        <variable initial_value="0.2802" name="a" units="dimensionless"/>
+        <variable initial_value="-505.3" name="b" units="per_m"/>
+        <variable initial_value="0.1324" name="c" units="dimensionless"/>
+        <variable initial_value="-11.14" name="d" units="per_m"/>
+        <variable name="alpha" public_interface="in" units="dimensionless"/>
+        <!-- State Variables-->
+        <variable name="u_in" public_interface="in" units="J_per_m3"/>
+        <variable initial_value="0.0" name="v" public_interface="out" units="m3_per_s"/>
+        <variable name="u" public_interface="out" units="J_per_m3"/>
+        <variable name="q_0" public_interface="out" units="m3"/>
+        <variable initial_value="0.0" name="u_C" public_interface="out" units="J_per_m3"/>
+        <variable initial_value="0.0" name="u_T" public_interface="out" units="J_per_m3"/>
+        <variable initial_value="0.0" name="v_T" public_interface="out" units="m3_per_s"/>
+        <variable name="u_out" public_interface="in" units="J_per_m3"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <ci>q_0</ci>
+                <apply>
+                    <times/>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <pi/>
+                            <ci>l</ci>
+                        </apply>
+                        <cn cellml:units="dimensionless">3</cn>
+                    </apply>
+                    <apply>
+                        <plus/>
+                        <apply>
+                            <times/>
+                            <ci>r_p</ci>
+                            <ci>r_p</ci>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <ci>r_d</ci>
+                            <ci>r_p</ci>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <ci>r_d</ci>
+                            <ci>r_d</ci>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>r</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <plus/>
+                        <ci>r_p</ci>
+                        <ci>r_d</ci>
+                    </apply>
+                    <cn cellml:units="dimensionless">2</cn>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>h</ci>
+                <apply>
+                    <times/>
+                    <ci>r</ci>
+                    <apply>
+                        <plus/>
+                        <apply>
+                            <times/>
+                            <ci>a</ci>
+                            <apply>
+                                <exp/>
+                                <apply>
+                                    <times/>
+                                    <ci>b</ci>
+                                    <ci>r</ci>
+                                </apply>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <ci>c</ci>
+                            <apply>
+                                <exp/>
+                                <apply>
+                                    <times/>
+                                    <ci>d</ci>
+                                    <ci>r</ci>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>I</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <times/>
+                        <ci>rho</ci>
+                        <ci>l</ci>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <pi/>
+                        <apply>
+                            <power/>
+                            <ci>r</ci>
+                            <cn cellml:units="dimensionless">2</cn>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>I_e</ci>
+                <apply>
+                    <times/>
+                    <ci>I</ci>
+                    <cn cellml:units="dimensionless" type="e-notation">1<sep/>-6</cn>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>C</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <times/>
+                        <cn cellml:units="dimensionless">2</cn>
+                        <pi/>
+                        <apply>
+                            <power/>
+                            <ci>r</ci>
+                            <cn cellml:units="dimensionless">3</cn>
+                        </apply>
+                        <ci>l</ci>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <ci>E</ci>
+                        <ci>h</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>R</ci>
+                <apply>
+                    <times/>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <cn cellml:units="dimensionless">8</cn>
+                            <ci>mu</ci>
+                            <ci>l</ci>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <cn cellml:units="dimensionless">3</cn>
+                            <pi/>
+                        </apply>
+                    </apply>
+                    <apply>
+                        <plus/>
+                        <apply>
+                            <divide/>
+                            <cn cellml:units="dimensionless">1</cn>
+                            <apply>
+                                <times/>
+                                <apply>
+                                    <power/>
+                                    <ci>r_p</ci>
+                                    <cn cellml:units="dimensionless">3</cn>
+                                </apply>
+                                <ci>r_d</ci>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <divide/>
+                            <cn cellml:units="dimensionless">1</cn>
+                            <apply>
+                                <times/>
+                                <apply>
+                                    <power/>
+                                    <ci>r_p</ci>
+                                    <cn cellml:units="dimensionless">2</cn>
+                                </apply>
+                                <apply>
+                                    <power/>
+                                    <ci>r_d</ci>
+                                    <cn cellml:units="dimensionless">2</cn>
+                                </apply>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <divide/>
+                            <cn cellml:units="dimensionless">1</cn>
+                            <apply>
+                                <times/>
+                                <ci>r_p</ci>
+                                <apply>
+                                    <power/>
+                                    <ci>r_d</ci>
+                                    <cn cellml:units="dimensionless">3</cn>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>R_v</ci>
+                <apply>
+                    <divide/>
+                    <cn cellml:units="second">0.01</cn>
+                    <ci>C</ci>
+                </apply>
+            </apply>
+            <!--        R_T_2 = 4{dimensionless}*R_T;-->
+            <!-- Conservation Laws-->
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>v</ci>
+                </apply>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <minus/>
+                        <apply>
+                            <minus/>
+                            <apply>
+                                <minus/>
+                                <ci>u_in</ci>
+                                <ci>u</ci>
+                            </apply>
+                            <apply>
+                                <times/>
+                                <ci>R</ci>
+                                <ci>v</ci>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <ci>rho</ci>
+                            <ci>g</ci>
+                            <ci>l</ci>
+                            <apply>
+                                <cos/>
+                                <apply>
+                                    <divide/>
+                                    <apply>
+                                        <times/>
+                                        <ci>theta</ci>
+                                        <pi/>
+                                    </apply>
+                                    <cn cellml:units="dimensionless">180</cn>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </apply>
+                    <ci>I</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>u_C</ci>
+                </apply>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <minus/>
+                        <ci>v</ci>
+                        <ci>v_T</ci>
+                    </apply>
+                    <ci>C</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>u</ci>
+                <apply>
+                    <plus/>
+                    <ci>u_C</ci>
+                    <apply>
+                        <times/>
+                        <ci>R_v</ci>
+                        <apply>
+                            <minus/>
+                            <ci>v</ci>
+                            <ci>v_T</ci>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>v_T</ci>
+                </apply>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <minus/>
+                        <apply>
+                            <minus/>
+                            <apply>
+                                <minus/>
+                                <ci>u</ci>
+                                <ci>u_out</ci>
+                            </apply>
+                            <ci>u_T</ci>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <ci>alpha</ci>
+                            <ci>R_T</ci>
+                            <ci>v_T</ci>
+                        </apply>
+                    </apply>
+                    <ci>I_e</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>u_T</ci>
+                </apply>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <minus/>
+                        <ci>v_T</ci>
+                        <apply>
+                            <divide/>
+                            <ci>u_T</ci>
+                            <apply>
+                                <times/>
+                                <ci>alpha</ci>
+                                <ci>R_T_2</ci>
+                            </apply>
+                        </apply>
+                    </apply>
+                    <ci>C_T</ci>
+                </apply>
+            </apply>
+        </math>
+        <!-- State variables-->
+        <variable initial_value="0" name="q" public_interface="out" units="mole"/>
+        <variable name="q_in" public_interface="in" units="mole"/>
+        <variable name="v_conc" public_interface="out" units="mol_per_s"/>
+        <variable name="v_conc_out" public_interface="in" units="mol_per_s"/>
+        <!-- Conservation laws-->
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>q</ci>
+                </apply>
+                <apply>
+                    <minus/>
+                    <ci>v_conc</ci>
+                    <ci>v_conc_out</ci>
+                </apply>
+            </apply>
+            <!-- Constitutive relations-->
+            <apply>
+                <eq/>
+                <ci>v_conc</ci>
+                <apply>
+                    <times/>
+                    <apply>
+                        <divide/>
+                        <ci>v</ci>
+                        <apply>
+                            <times/>
+                            <pi/>
+                            <apply>
+                                <power/>
+                                <ci>r</ci>
+                                <cn cellml:units="dimensionless">2</cn>
+                            </apply>
+                            <ci>l</ci>
+                        </apply>
+                    </apply>
+                    <apply>
+                        <minus/>
+                        <ci>q_in</ci>
+                        <ci>q</ci>
+                    </apply>
+                </apply>
+            </apply>
+        </math>
+    </component>
+    <!--&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-//
+&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-//-->
+    <component name="vv_adv_type">
+        <variable name="t" public_interface="in" units="second"/>
+        <!-- Constitutive Parameters-->
+        <variable initial_value="0.004" name="mu" units="Js_per_m3"/>
+        <variable initial_value="1050" name="rho" units="Js2_per_m5"/>
+        <variable name="g" public_interface="in" units="m_per_s2"/>
+        <variable name="E" public_interface="in" units="J_per_m3"/>
+        <variable name="theta" public_interface="in" units="dimensionless"/>
+        <variable name="l" public_interface="in" units="metre"/>
+        <variable name="h" public_interface="out" units="metre"/>
+        <variable name="r_d" public_interface="in" units="metre"/>
+        <variable name="r_p" public_interface="in" units="metre"/>
+        <variable name="r" public_interface="out" units="metre"/>
+        <variable name="I" public_interface="out" units="Js2_per_m6"/>
+        <variable name="C" public_interface="out" units="m6_per_J"/>
+        <variable name="R" public_interface="out" units="Js_per_m6"/>
+        <variable name="R_v" public_interface="out" units="Js_per_m6"/>
+        <variable initial_value="0.2802" name="a" units="dimensionless"/>
+        <variable initial_value="-505.3" name="b" units="per_m"/>
+        <variable initial_value="0.1324" name="c" units="dimensionless"/>
+        <variable initial_value="-11.14" name="d" units="per_m"/>
+        <!-- State Variables-->
+        <variable name="v_in" public_interface="in" units="m3_per_s"/>
+        <variable name="u" public_interface="out" units="J_per_m3"/>
+        <variable initial_value="0.0" name="u_C" public_interface="out" units="J_per_m3"/>
+        <variable initial_value="0.0" name="v" public_interface="out" units="m3_per_s"/>
+        <variable name="u_d" public_interface="out" units="J_per_m3"/>
+        <variable name="q_0" public_interface="out" units="m3"/>
+        <variable initial_value="0.0" name="u_C_d" public_interface="out" units="J_per_m3"/>
+        <variable name="v_out" public_interface="in" units="m3_per_s"/>
+        <!-- Constitutive Relations-->
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <ci>q_0</ci>
+                <apply>
+                    <times/>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <pi/>
+                            <ci>l</ci>
+                        </apply>
+                        <cn cellml:units="dimensionless">3</cn>
+                    </apply>
+                    <apply>
+                        <plus/>
+                        <apply>
+                            <times/>
+                            <ci>r_p</ci>
+                            <ci>r_p</ci>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <ci>r_d</ci>
+                            <ci>r_p</ci>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <ci>r_d</ci>
+                            <ci>r_d</ci>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>r</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <plus/>
+                        <ci>r_p</ci>
+                        <ci>r_d</ci>
+                    </apply>
+                    <cn cellml:units="dimensionless">2</cn>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>h</ci>
+                <apply>
+                    <times/>
+                    <ci>r</ci>
+                    <apply>
+                        <plus/>
+                        <apply>
+                            <times/>
+                            <ci>a</ci>
+                            <apply>
+                                <exp/>
+                                <apply>
+                                    <times/>
+                                    <ci>b</ci>
+                                    <ci>r</ci>
+                                </apply>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <ci>c</ci>
+                            <apply>
+                                <exp/>
+                                <apply>
+                                    <times/>
+                                    <ci>d</ci>
+                                    <ci>r</ci>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>I</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <times/>
+                        <ci>rho</ci>
+                        <ci>l</ci>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <pi/>
+                        <apply>
+                            <power/>
+                            <ci>r</ci>
+                            <cn cellml:units="dimensionless">2</cn>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>C</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <times/>
+                        <cn cellml:units="dimensionless">2</cn>
+                        <pi/>
+                        <apply>
+                            <power/>
+                            <ci>r</ci>
+                            <cn cellml:units="dimensionless">3</cn>
+                        </apply>
+                        <ci>l</ci>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <ci>E</ci>
+                        <ci>h</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>R</ci>
+                <apply>
+                    <times/>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <cn cellml:units="dimensionless">8</cn>
+                            <ci>mu</ci>
+                            <ci>l</ci>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <cn cellml:units="dimensionless">3</cn>
+                            <pi/>
+                        </apply>
+                    </apply>
+                    <apply>
+                        <plus/>
+                        <apply>
+                            <divide/>
+                            <cn cellml:units="dimensionless">1</cn>
+                            <apply>
+                                <times/>
+                                <apply>
+                                    <power/>
+                                    <ci>r_p</ci>
+                                    <cn cellml:units="dimensionless">3</cn>
+                                </apply>
+                                <ci>r_d</ci>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <divide/>
+                            <cn cellml:units="dimensionless">1</cn>
+                            <apply>
+                                <times/>
+                                <apply>
+                                    <power/>
+                                    <ci>r_p</ci>
+                                    <cn cellml:units="dimensionless">2</cn>
+                                </apply>
+                                <apply>
+                                    <power/>
+                                    <ci>r_d</ci>
+                                    <cn cellml:units="dimensionless">2</cn>
+                                </apply>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <divide/>
+                            <cn cellml:units="dimensionless">1</cn>
+                            <apply>
+                                <times/>
+                                <ci>r_p</ci>
+                                <apply>
+                                    <power/>
+                                    <ci>r_d</ci>
+                                    <cn cellml:units="dimensionless">3</cn>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>R_v</ci>
+                <apply>
+                    <divide/>
+                    <cn cellml:units="second">0.01</cn>
+                    <ci>C</ci>
+                </apply>
+            </apply>
+            <!-- Conservation Laws-->
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>v</ci>
+                </apply>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <minus/>
+                        <apply>
+                            <minus/>
+                            <apply>
+                                <minus/>
+                                <ci>u</ci>
+                                <ci>u_d</ci>
+                            </apply>
+                            <apply>
+                                <times/>
+                                <ci>R</ci>
+                                <ci>v</ci>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <times/>
+                            <ci>rho</ci>
+                            <ci>g</ci>
+                            <ci>l</ci>
+                            <apply>
+                                <cos/>
+                                <apply>
+                                    <divide/>
+                                    <apply>
+                                        <times/>
+                                        <ci>theta</ci>
+                                        <pi/>
+                                    </apply>
+                                    <cn cellml:units="dimensionless">180</cn>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </apply>
+                    <ci>I</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>u_C</ci>
+                </apply>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <minus/>
+                        <ci>v_in</ci>
+                        <ci>v</ci>
+                    </apply>
+                    <apply>
+                        <divide/>
+                        <ci>C</ci>
+                        <cn cellml:units="dimensionless">2</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>u_C_d</ci>
+                </apply>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <minus/>
+                        <ci>v</ci>
+                        <ci>v_out</ci>
+                    </apply>
+                    <apply>
+                        <divide/>
+                        <ci>C</ci>
+                        <cn cellml:units="dimensionless">2</cn>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>u</ci>
+                <apply>
+                    <plus/>
+                    <ci>u_C</ci>
+                    <apply>
+                        <times/>
+                        <cn cellml:units="dimensionless">2</cn>
+                        <ci>R_v</ci>
+                        <apply>
+                            <minus/>
+                            <ci>v_in</ci>
+                            <ci>v</ci>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>u_d</ci>
+                <apply>
+                    <plus/>
+                    <ci>u_C_d</ci>
+                    <apply>
+                        <times/>
+                        <cn cellml:units="dimensionless">2</cn>
+                        <ci>R_v</ci>
+                        <apply>
+                            <minus/>
+                            <ci>v</ci>
+                            <ci>v_out</ci>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+        </math>
+        <!-- State variables-->
+        <variable initial_value="0" name="q" public_interface="out" units="mole"/>
+        <variable name="q_in" public_interface="in" units="mole"/>
+        <variable name="v_conc" public_interface="out" units="mol_per_s"/>
+        <variable name="v_conc_out" public_interface="in" units="mol_per_s"/>
+        <!-- Conservation laws-->
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>q</ci>
+                </apply>
+                <apply>
+                    <minus/>
+                    <ci>v_conc</ci>
+                    <ci>v_conc_out</ci>
+                </apply>
+            </apply>
+            <!-- Constitutive relations-->
+            <apply>
+                <eq/>
+                <ci>v_conc</ci>
+                <apply>
+                    <times/>
+                    <apply>
+                        <divide/>
+                        <ci>v</ci>
+                        <apply>
+                            <times/>
+                            <pi/>
+                            <apply>
+                                <power/>
+                                <ci>r</ci>
+                                <cn cellml:units="dimensionless">2</cn>
+                            </apply>
+                            <ci>l</ci>
+                        </apply>
+                    </apply>
+                    <apply>
+                        <minus/>
+                        <ci>q_in</ci>
+                        <ci>q</ci>
+                    </apply>
+                </apply>
+            </apply>
+        </math>
+    </component>
+</model>
