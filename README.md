@@ -8,20 +8,11 @@ The repository contains two parallel solver tracks (V1 and V2) and a single shar
 animation notebook that exports MP4s from saved pressure snapshots.
 
 ---
+## Demo video
 
-## 1. Final deliverables
+Click the preview below to watch the ADAN-86 pressure-wave propagation animation on YouTube.
 
-Both videos are 20 s @ 30 fps, ~8 MB each. The lower panel is a monitor-style
-right-brachial pressure trace looping the chosen cardiac cycle.
-
-| File | Track | Source candidate |
-|---|---|---|
-| `results/video_exports/candidate_A_v1_8cycles_adan86_20s_cycle_loop_period1_offset0.mp4` | V1 | `optuna_E_best_trial_4_long100.pkl` (Study E, trial 4) |
-| `results/video_exports/candidate_B_bg_v2_8cycles_adan86_20s_cycle_loop_period1_offset0.mp4` | V2 | `nb04_bg_v2_final_animation_ready_8cycles.pkl` (Experiment 19) |
-
-Both candidates are produced by the same animation notebook
-(`06_final_animation_export.ipynb`) - only the active candidate switch differs.
-
+[![ADAN-86 pressure-wave propagation animation](https://img.youtube.com/vi/NsJphGUbqeg/maxresdefault.jpg)](https://www.youtube.com/watch?v=NsJphGUbqeg)
 ---
 
 ## 1. Model and physics
