@@ -22,6 +22,11 @@ right-brachial pressure trace looping the chosen cardiac cycle.
 Both candidates are produced by the same animation notebook
 (`06_final_animation_export.ipynb`) - only the active candidate switch differs.
 
+## Demo video Simple
+
+Click the preview below to watch the ADAN-86 pressure-wave propagation animation on YouTube.
+
+[![ADAN-86 pressure-wave propagation animation](https://img.youtube.com/vi/NsJphGUbqeg/maxresdefault.jpg)](https://www.youtube.com/watch?v=NsJphGUbqeg)
 ---
 
 ## 2. Model and physics
@@ -69,6 +74,7 @@ adan_project/
 ├── 04_speedup_solver_numba_v2.ipynb
 ├── 05_brachial_optimization.ipynb        # V1 only — Optuna studies A-E
 ├── 06_final_animation_export.ipynb       # Shared MP4 export
+├── 06_final_animation_export_v2.ipynb    # Improved animation 
 ├── adan_parsed.pkl                       # V1 parser output
 ├── adan_parsed_bg.pkl                    # V2 parser output (BG wall law)
 ├── adan86_*.csv                          # Inspection / debug tables
