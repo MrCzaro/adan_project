@@ -22,14 +22,9 @@ right-brachial pressure trace looping the chosen cardiac cycle.
 Both candidates are produced by the same animation notebook
 (`06_final_animation_export.ipynb`) - only the active candidate switch differs.
 
-## Demo video Simple
-
-Click the preview below to watch the ADAN-86 pressure-wave propagation animation on YouTube.
-
-[![ADAN-86 pressure-wave propagation animation](https://img.youtube.com/vi/NsJphGUbqeg/maxresdefault.jpg)](https://www.youtube.com/watch?v=NsJphGUbqeg)
 ---
 
-## 2. Model and physics
+## 1. Model and physics
 
 - **Topology**: ADAN-86 (Anatomically Detailed Arterial Network, 86 large arteries).
   In the CellML representation, several anatomical arteries are split into multiple
@@ -57,7 +52,7 @@ for legibility (the goal is a readable schematic, not anatomical realism).
 
 ---
 
-## 3. Repository layout
+## 2. Repository layout
 
 ```
 adan_project/
@@ -79,12 +74,7 @@ adan_project/
 ├── adan_parsed_bg.pkl                    # V2 parser output (BG wall law)
 ├── adan86_*.csv                          # Inspection / debug tables
 ├── requirements.txt
-└── results/
-    ├── optuna_E_best_trial_4_long100.pkl
-    ├── nb04_bg_v2_final_animation_ready_8cycles.pkl
-    └── video_exports/
-        ├── candidate_A_v1_8cycles_*.mp4
-        └── candidate_B_bg_v2_8cycles_*.mp4
+
 ```
 
 `results/` and `*.pkl` are in `.gitignore`; the final MP4s and the two animation-ready
@@ -92,7 +82,7 @@ pickles are committed because they are the deliverables.
 
 ---
 
-## 4. Two tracks: V1 and V2
+## 3. Two tracks: V1 and V2
 
 Both tracks parse the same CellML model, run the same MacCormack + characteristic
 + Windkessel solver, and feed `06_final_animation_export.ipynb`. They differ in
@@ -183,7 +173,7 @@ brachial waveform shape and the reflections at every bifurcation.
 
 ---
 
-## 5. Numerical assumptions
+## 4. Numerical assumptions
 
 | Item | Value / choice |
 |---|---|
@@ -206,7 +196,7 @@ not physiological components.
 
 ---
 
-## 6. Problems encountered and how they were handled
+## 5. Problems encountered and how they were handled
 
 These are the issues that actually shaped the notebooks. 
 
@@ -247,7 +237,7 @@ These are the issues that actually shaped the notebooks.
 
 ---
 
-## 7. Libraries
+## 6. Libraries
 
 - **NumPy / SciPy / pandas** — array math, parameter handling, light analysis.
 - **Numba** — JIT-compiled flat kernels for MacCormack, stabilizer, junctions
@@ -269,7 +259,7 @@ Full pinned environment in `requirements.txt`.
 
 ---
 
-## 8. How to reproduce
+## 7. How to reproduce
 
 1. Create the venv and install: `pip install -r requirements.txt`. Make sure a
    real `ffmpeg.exe` is on `PATH`.
@@ -290,7 +280,7 @@ Full pinned environment in `requirements.txt`.
 
 ---
 
-## 9. Acknowledgements
+## 8. Acknowledgements
 
 This project uses the **ADAN-86** arterial network model, distributed publicly
 in CellML form through the **Physiome Model Repository** (workspace `4ac`).
